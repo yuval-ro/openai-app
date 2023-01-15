@@ -3,10 +3,9 @@
 //  gets back a response as a data.message,
 //  finally displays that message in a box bellow.
 
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -16,45 +15,48 @@ import { Navbar, NavbarBrand, NavLink } from 'react-bootstrap';
 
 import logo from './openai.svg';
 
+import MessageForm from './components/MessageForm/MessageForm';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+
+import LoginForm from './components/LoginForm/LoginForm';
+
+import Home from './containers/Home/Home';
+import Admin from './containers/Admin/Admin';
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
 export default function App() {
-	const [message, setMessage] = useState('');
-	const [response, setResponse] = useState('');
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		fetch('http://localhost:3001', {
-				method: 'POST',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify({ message }),
-		})
-			.then((res) => res.json())
-			.then((data) => setResponse(data.message));
-	};
-
-	const handleAdmin = (e) => {
-		// e.preventDefault();
-		prompt('Enter Administrator Credentials:');
-	}
-		// <div className="App">
-		// 	<form onSubmit={handleSubmit}>
-		// 		<textarea
-		// 			value={message}
-		// 			onChange={ (e) => setMessage(e.target.value)}
-		// 		></textarea>
-		// 		<button type="submit">Submit</button>
-		// 	</form>
-		// 	<div>{response}</div>
-		// </div>
-
 	return (
-		<>
-		<Container className='container-fluid'>
-			<Navbar bg='dark' variant='dark'>
-				<Navbar.Brand href='/'>Chat</Navbar.Brand>
-				<Nav className="mr-auto">
-                	<Nav.Link href="/">main</Nav.Link>
-                	<Nav.Link onSelect={handleAdmin}>login</Nav.Link>
-            	</Nav>
+		<React.Fragment>
+			
+			<BrowserRouter>
+				<Routes>
+					<Route path='/' element={<Header />}>
+						<Route index element={<Home />} />
+						<Route path='admin' element={<Admin />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+
+			<Footer />
+			
+		</React.Fragment>
+	);
+}
+
+
+
+
+
+		{/* <Container className='container-fluid'> */}
+			{/* <Navbar bg='dark' variant='dark'> */}
+				{/* <Navbar.Brand href='/'>Chat</Navbar.Brand> */}
+				{/* <Nav className="mr-auto"> */}
+                	{/* <Nav.Link href="/">main</Nav.Link> */}
+                	{/* <Nav.Link onSelect={handleAdmin}>login</Nav.Link> */}
+            	{/* </Nav> */}
 				{/* <Nav.Item>
 					<Nav.Link href='/'>Dummy</Nav.Link>
 				</Nav.Item> */}
@@ -64,19 +66,5 @@ export default function App() {
 				{/* <Nav.Item>
 					<Nav.Link onSelect={handleAdmin}>Admin Login</Nav.Link>
 				</Nav.Item> */}
-			</Navbar>
-  		</Container>
-
-
-		<Container className='container-fluid'>
-			<Row className=''>
-				<Col className='border text-center'>
-					ChatGPT
-				</Col>
-				{/* <Col className='border'>Col2</Col> */}
-				{/* <Col className='border'>Col3</Col> */}
-			</Row>
-	  </Container>
-	  </>
-	);
-}
+			{/* </Navbar> */}
+  		{/* </Container> */}
