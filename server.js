@@ -35,7 +35,7 @@ app.post('/login', (req, res) => {
 	const user = req.body.user;
 	const pass = req.body.pass;
 
-	if (user == defuser && pass == defpass) {
+	if (user == process.env.LOGIN_USER && pass == process.env.LOGIN_PASS) {
 		res.json({ auth: true });
 	}
 	else {
