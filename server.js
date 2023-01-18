@@ -1,3 +1,4 @@
+require('dotenv').config();
 const davinci = require('./davinci');
 const logger = require('./db');
 const express = require('express');
@@ -33,11 +34,11 @@ app.post('/prompt', async (req, res) => {
 app.post('/login', (req, res) => {
 	const user = req.body.user;
 	const pass = req.body.pass;
-	
+
 	if (user == defuser && pass == defpass) {
-		res.json({ auth: true});
+		res.json({ auth: true });
 	}
 	else {
-		res.json({ auth: false});
+		res.json({ auth: false });
 	}
 })
