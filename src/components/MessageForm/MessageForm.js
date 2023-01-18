@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
+import { sendMessage } from '../../Client';
+
 import './MessageForm.css';
-
-
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
-
-import { sendMessage } from '../../Api';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 
 
@@ -18,31 +13,39 @@ const MessageForm = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		sendMessage(message)
-			.then(res => setResponse(res));
+			.then((response) => {
+				setResponse(response);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
 	};
 
-	const onTextAreaChange = e => {
+	const onMessageFormChange = e => {
 		setMessage(e?.target?.value);
 	}
 
 	return (
 		<Container className='container-fluid'>
 			<Row className=''>
-				<Col className='border text-center'>
-					<form onSubmit={handleSubmit}>
-						<textarea
-							value={message}
-							onChange={e => onTextAreaChange(e)}
-						>
-						</textarea>
-						<button type="submit">Submit</button>
-					</form>
+				<Col className='border'>
+					<Form className='' onSubmit={handleSubmit}>
+						<Form.Label>
+							<h2>Chat with OpenAI</h2>
+						</Form.Label>
+						<Form.Group className='' controlId=''>
+							<Form.Control type='text' placeholder='Enter your question here'
+								value={message}
+								onChange={e => onMessageFormChange(e)}></Form.Control>
+						</Form.Group>
+						<Button variant='primary' type='submit'>Submit</Button>
+					</Form>
 					<div>
 						{response}
 					</div>
 				</Col>
 			</Row>
-	  </Container>
+		</Container>
 	);
 }
 

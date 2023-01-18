@@ -1,62 +1,43 @@
-// express server will handle incoming requests
-const OpenAI = require('openai');
-const { Configuration, OpenAIApi } = OpenAI;
-const { MongoClient } = require('mongodb');
-
+const davinci = require('./davinci');
+const logger = require('./db');
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors'); // express middleware
-const app = express();
+const cors = require('cors'); // Cross-Origin Resource Sharing
 const port = 3001;
-const uri = 'mongodb://127.0.0.1:27017';
-const client = new MongoClient(uri);
 
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json());
+const defuser = 'admin';
+const defpass = defuser;
 
 
-const config = new Configuration({
-	organization: 'org-oPvteLntzf30LBYsxA0j1zyH',
-	apiKey: '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'
+const app = express();
+
+app.use(express.json());
+
+app.use(cors());
+
+app.listen(port, () => {
+	console.log(`Server started and listening on port ${port}`);
 });
-const openai = new OpenAIApi(config);
 
+app.post('/prompt', async (req, res) => {
+	const prompt = req.body.message;
+	try {
+		const tokens = 10;
+		const answer = await davinci(prompt, tokens);
+		logger(prompt, answer);
+		res.json({ message: answer });
+	} catch (err) {
+		res.status(500).json({ message: err.message });
+	}
+});
 
-async function run() {
-	await client.connect();
-	const db = client.db('open-ai-app');
+app.post('/login', (req, res) => {
+	const user = req.body.user;
+	const pass = req.body.pass;
 	
-	app.listen(port, () => {
-		console.log(`listening on port ${port}`);
-	});
-
-	app.use(bodyParser.json());
-	app.use(cors());
-
-	app.get('/', (req, res) => {
-		// res.type('html');
-		res.sendFile(__dirname + '/index.html');
-	});
-
-	app.post('/', async (req, res) => {
-		console.log(req.body);
-		const { message } = req.body;
-		// const response = await openai.createCompletion({
-		// 	model: 'text-davinci-003',
-		// 	prompt: ${message},
-		// 	max_tokens: 20,
-		// 	temperature: 0,
-		// });
-		// res.json({
-		// 	message: response.data.choices[0].text
-		// });
-		// let collection = db.collection('log');
-		// collection.insertOne(response);
-
-		res.json({
-			message: `you wrote: "${message}"`
-		});
-	});
-}
-run().catch(console.dir);
-
+	if (user == defuser && pass == defpass) {
+		res.json({ auth: true});
+	}
+	else {
+		res.json({ auth: false});
+	}
+})

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import LoginForm from '../../components/LoginForm/LoginForm';
+import Database from '../../components/Database/Database';
 import './Admin.css';
+
 
 const Admin = () => {
 	const [isLoggedIn, setIsLoggenIn] = useState(false);
@@ -9,7 +11,7 @@ const Admin = () => {
 		return (
 			<React.Fragment>
 				<div>Admin Container</div>
-				<div>insert Log component</div>
+				<Database />
 			</React.Fragment>
 		);
 	}

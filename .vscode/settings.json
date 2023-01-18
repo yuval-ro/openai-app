@@ -1,0 +1,14 @@
+{
+	"editor.formatOnSave": true,
+	"editor.cursorBlinking": "blink",
+	"editor.cursorStyle": "line",
+	"editor.fontFamily": "'Consolas'",
+	"editor.fontSize": 14,
+	"editor.fontWeight": "500",
+	"editor.letterSpacing": 0,
+	"editor.lineHeight": 20,
+	"editor.lineNumbers": "on",
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
+	"editor.detectIndentation": false
+}
