@@ -1,26 +1,22 @@
 import React from 'react';
 import './App.css';
-
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-
 import Home from './containers/Home/Home';
 import Admin from './containers/Admin/Admin';
 import Login from './containers/Login/Login';
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { RequireAuth } from 'react-auth-kit';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider, RequireAuth } from 'react-auth-kit';
 import { Container } from 'react-bootstrap'
+import { Link } from 'react-router-dom';
 
 
 const App = () => (
 	<Container className='container-fluid border'>
-		<BrowserRouter>
-			<Header />
-
-			<Routes>
-				<Route>
+		<AuthProvider>
+			<BrowserRouter>
+				<Header />
+				<Routes>
 					<Route path='/' element={<Home />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/admin' element={
@@ -28,11 +24,10 @@ const App = () => (
 							<Admin />
 						</RequireAuth>
 					} />
-				</Route>
-			</Routes>
-
-			<Footer />
-		</BrowserRouter>
+				</Routes>
+				<Footer />
+			</BrowserRouter>
+		</AuthProvider>
 	</Container>
 );
 

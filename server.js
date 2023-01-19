@@ -18,16 +18,24 @@ app.listen(port, () => {
 	console.log(`Server started and listening on port ${port}`);
 });
 
-app.post('/api/davinci', async (req, res) => {
+app.post('/api/davinci', (req, res) => {
 	const prompt = req.body.message;
-	try {
-		const tokens = 10;
-		const answer = await davinci(prompt, tokens);
-		logger(prompt, answer);
-		res.json({ message: answer });
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
+	const tokens = 10;
+	davinci(prompt, tokens)
+		.then((answer) => {
+			logger(prompt, answer)
+				.catch((err) => {
+					res
+						.status(500)
+						.json({ message: err.message })
+				})
+			res.json({ message: answer });
+		})
+		.catch((err) => {
+			res
+				.status(500)
+				.json({ message: err.message })
+		})
 });
 
 app.post('/api/auth', (req, res) => {

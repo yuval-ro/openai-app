@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { authLogin } from '../../Client';
-
 import './LoginForm.css';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Toast from 'react-bootstrap/Toast';
@@ -8,23 +7,21 @@ import { useSignIn } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
 
 
-
 const LoginForm = () => {
 	const [user, setUser] = useState('');
 	const [pass, setPass] = useState('');
 	const [loginToast, setLoginToast] = useState(false);
-	const signin = useSignIn();
+	const signIn = useSignIn();
 	const navigate = useNavigate();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		authLogin(user, pass)
 			.then((response) => {
-				signin({
+				signIn({
 					token: response,
-					expiresIn: 3600,
+					expiresIn: 5, // minutes
 					tokenType: 'Bearer',
-					authState: 'admin'
 				});
 				navigate('/admin'); // redirect after successfull login
 			})

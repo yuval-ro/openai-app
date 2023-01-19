@@ -1,24 +1,14 @@
 import React from 'react';
 import './Header.css';
-
-import { Outlet, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import Footer from '../Footer/Footer'
+
 
 const Header = () => (
 	<Container className='container-fluid border'>
 		<div>Header component</div>
-		<nav>
-			<ul>
-				<li>
-					<Link to="/">Home</Link>
-				</li>
-				<li>
-					<Link to="/admin">Admin</Link>
-				</li>
-			</ul>
-		</nav>
-		<Outlet />
+		<Link to="/">Home</Link>
+		<Link to="/admin">Admin</Link>
 	</Container>
 );
 
