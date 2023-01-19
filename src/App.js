@@ -23,48 +23,34 @@ import LoginForm from './components/LoginForm/LoginForm';
 
 import Home from './containers/Home/Home';
 import Admin from './containers/Admin/Admin';
+import Login from './containers/Login/Login';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-
-export default function App() {
-	return (
-		<React.Fragment>
-			
-			<BrowserRouter>
-				<Routes>
-					<Route path='/' element={<Header />}>
-						<Route index element={<Home />} />
-						<Route path='admin' element={<Admin />} />
-					</Route>
-				</Routes>
-			</BrowserRouter>
-
-			<Footer />
-			
-		</React.Fragment>
-	);
-}
+import { RequireAuth } from 'react-auth-kit';
 
 
 
 
+const App = () => (
+	<React.Fragment>
+		<BrowserRouter>
+			<Routes>
+				<Route path='/' element={<Header />}>
+					<Route path='/' element={<Home />} />
+					<Route path='/login' element={<Login />} />
+					<Route path='/admin' element={
+						<RequireAuth loginPath={'/login'}>
+							<Admin />
+						</RequireAuth>
+					} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
 
-		{/* <Container className='container-fluid'> */}
-			{/* <Navbar bg='dark' variant='dark'> */}
-				{/* <Navbar.Brand href='/'>Chat</Navbar.Brand> */}
-				{/* <Nav className="mr-auto"> */}
-                	{/* <Nav.Link href="/">main</Nav.Link> */}
-                	{/* <Nav.Link onSelect={handleAdmin}>login</Nav.Link> */}
-            	{/* </Nav> */}
-				{/* <Nav.Item>
-					<Nav.Link href='/'>Dummy</Nav.Link>
-				</Nav.Item> */}
-				{/* <Nav.Item>
-					<Nav.Link src={logo} width='50' height='50'></Nav.Link>
-				</Nav.Item> */}
-				{/* <Nav.Item>
-					<Nav.Link onSelect={handleAdmin}>Admin Login</Nav.Link>
-				</Nav.Item> */}
-			{/* </Navbar> */}
-  		{/* </Container> */}
+		<Footer />
+
+	</React.Fragment>
+);
+
+
+export default App;

@@ -3,10 +3,9 @@ const davinci = require('./davinci');
 const logger = require('./db');
 const express = require('express');
 const cors = require('cors'); // Cross-Origin Resource Sharing
+const jwt = require('jsonwebtoken')
 const port = 3001;
 
-const defuser = 'admin';
-const defpass = defuser;
 
 
 const app = express();
@@ -19,7 +18,7 @@ app.listen(port, () => {
 	console.log(`Server started and listening on port ${port}`);
 });
 
-app.post('/prompt', async (req, res) => {
+app.post('/api/davinci', async (req, res) => {
 	const prompt = req.body.message;
 	try {
 		const tokens = 10;
@@ -31,14 +30,23 @@ app.post('/prompt', async (req, res) => {
 	}
 });
 
-app.post('/login', (req, res) => {
-	const user = req.body.user;
-	const pass = req.body.pass;
-
-	if (user == process.env.LOGIN_USER && pass == process.env.LOGIN_PASS) {
-		res.json({ auth: true });
+app.post('/api/auth', (req, res) => {
+	const { user, pass } = req.body;
+	const username = process.env.LOGIN_USER;
+	const password = process.env.LOGIN_PASS;
+	if (pass === password && user === username) {
+		return res
+			.json({
+				auth: true,
+				token: jwt.sign('admin', process.env.RSA_KEY)
+			})
 	}
 	else {
-		res.json({ auth: false });
+		return res
+			.status(400)
+			.json({
+				auth: false,
+				token: null
+			})
 	}
 })

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function sendMessage(message) {
-	const url = 'http://localhost:3001/prompt';
+	const url = 'http://localhost:3001/api/davinci';
 	const data = { message };
 
 	const res = await axios({
@@ -14,7 +14,7 @@ export async function sendMessage(message) {
 }
 
 export async function authLogin(user, pass) {
-	const url = 'http://localhost:3001/login';
+	const url = 'http://localhost:3001/api/auth';
 	const data = { user, pass };
 
 	const res = await axios({
@@ -23,5 +23,5 @@ export async function authLogin(user, pass) {
 		data: data,
 	});
 
-	return res?.data?.auth;
+	return res?.data?.token;
 }

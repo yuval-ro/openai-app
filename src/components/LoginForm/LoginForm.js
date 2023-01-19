@@ -4,31 +4,35 @@ import { authLogin } from '../../Client';
 import './LoginForm.css';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Toast from 'react-bootstrap/Toast';
+import { useSignIn } from 'react-auth-kit';
 
 
 
-const LoginForm = () => {
+const LoginForm = (props) => {
 	const [user, setUser] = useState('');
 	const [pass, setPass] = useState('');
-	const [auth, setAuth] = useState(false);
 	const [loginToast, setLoginToast] = useState(false);
+	const signin = useSignIn();
 
-	const handleSubmit = e => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		authLogin(user, pass)
 			.then((response) => {
-				if (response === true) {
-					setAuth(true)
-				}
-				else {
-					console.log('nay');
-					setUser('');
-					setPass('');
-					setLoginToast(true);
-				}
+				signin({
+					token: response,
+					expiresIn: 3600,
+					tokenType: 'Bearer',
+					authState: 'admin'
+				});
+				props.onSubmit(true)
 			})
 			.catch((err) => {
 				console.error(err);
+				setLoginToast(true);
+			})
+			.finally(() => {
+				setUser('');
+				setPass('');
 			});
 	};
 
