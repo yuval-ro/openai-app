@@ -5,14 +5,16 @@ import './LoginForm.css';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Toast from 'react-bootstrap/Toast';
 import { useSignIn } from 'react-auth-kit';
+import { useNavigate } from 'react-router-dom';
 
 
 
-const LoginForm = (props) => {
+const LoginForm = () => {
 	const [user, setUser] = useState('');
 	const [pass, setPass] = useState('');
 	const [loginToast, setLoginToast] = useState(false);
 	const signin = useSignIn();
+	const navigate = useNavigate();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -24,7 +26,7 @@ const LoginForm = (props) => {
 					tokenType: 'Bearer',
 					authState: 'admin'
 				});
-				props.onSubmit(true)
+				navigate('/admin'); // redirect after successfull login
 			})
 			.catch((err) => {
 				console.error(err);
@@ -36,10 +38,10 @@ const LoginForm = (props) => {
 			});
 	};
 
-	const onUserChange = e => {
+	const onUserChange = (e) => {
 		setUser(e?.target?.value);
 	}
-	const onPassChange = e => {
+	const onPassChange = (e) => {
 		setPass(e?.target?.value);
 	}
 

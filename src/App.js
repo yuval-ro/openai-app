@@ -1,25 +1,8 @@
-// Create a react component that inputs a textarea msg,
-//  then performs a fetch req to localhost:3001,
-//  gets back a response as a data.message,
-//  finally displays that message in a box bellow.
-
 import React from 'react';
 import './App.css';
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Image from 'react-bootstrap/Image'
-import Nav from 'react-bootstrap/Nav';
-import { Navbar, NavbarBrand, NavLink } from 'react-bootstrap';
-
-import logo from './openai.svg';
-
-import MessageForm from './components/MessageForm/MessageForm';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-
-import LoginForm from './components/LoginForm/LoginForm';
 
 import Home from './containers/Home/Home';
 import Admin from './containers/Admin/Admin';
@@ -28,14 +11,16 @@ import Login from './containers/Login/Login';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RequireAuth } from 'react-auth-kit';
 
-
+import { Container } from 'react-bootstrap'
 
 
 const App = () => (
-	<React.Fragment>
+	<Container className='container-fluid border'>
 		<BrowserRouter>
+			<Header />
+
 			<Routes>
-				<Route path='/' element={<Header />}>
+				<Route>
 					<Route path='/' element={<Home />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/admin' element={
@@ -45,11 +30,10 @@ const App = () => (
 					} />
 				</Route>
 			</Routes>
+
+			<Footer />
 		</BrowserRouter>
-
-		<Footer />
-
-	</React.Fragment>
+	</Container>
 );
 
 

@@ -1,26 +1,26 @@
 import React from 'react';
 import './Header.css';
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import Footer from '../Footer/Footer'
 
-const Header = () => {
-	return (
-		<React.Fragment>
-			<div>Header component</div>
-			<nav>
-				<ul>
-					<li>
-						<Link to="/">Home</Link>
-					</li>
-					<li>
-						<Link to="/admin">Admin</Link>
-					</li>
-				</ul>
-			</nav>
-			<Outlet />
-		</React.Fragment>
-	);
-}
+const Header = () => (
+	<Container className='container-fluid border'>
+		<div>Header component</div>
+		<nav>
+			<ul>
+				<li>
+					<Link to="/">Home</Link>
+				</li>
+				<li>
+					<Link to="/admin">Admin</Link>
+				</li>
+			</ul>
+		</nav>
+		<Outlet />
+	</Container>
+);
 
 export default Header;
 
