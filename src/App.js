@@ -7,7 +7,7 @@ import Admin from './containers/Admin/Admin';
 import Login from './containers/Login/Login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider, RequireAuth } from 'react-auth-kit';
-import { Container } from 'react-bootstrap'
+import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 

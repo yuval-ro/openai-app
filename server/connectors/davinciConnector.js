@@ -8,20 +8,7 @@ const config = new Configuration({
 const openai = new OpenAIApi(config);
 const testing = true;
 
-async function davinci(prompt, tokens) {
-	// const data = {
-	// 	model: 'text-davinci-003',
-	// 	prompt: `${prompt}`,
-	// 	max_tokens: tokens,
-	// 	temperature: 0,
-	// }
-	// openai.createCompletion(data)
-	// 	.then((res) => {
-	// 		return res.data.choices[0].text;
-	// 	})
-	// 	.catch((err) => {
-	// 		return err.message;
-	// 	});
+async function promptDavinci(prompt, tokens) {
 	try {
 		let answer = null;
 		if (testing) {
@@ -42,4 +29,4 @@ async function davinci(prompt, tokens) {
 	}
 }
 
-module.exports = davinci;
+module.exports = { promptDavinci };

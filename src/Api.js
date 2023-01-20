@@ -25,3 +25,13 @@ export async function authLogin(user, pass) {
 
 	return res?.data?.token;
 }
+
+export async function getAllLogs() {
+	const url = 'http://localhost:3001/api/getall';
+
+	const res = await axios({
+		method: 'get',
+		url: url,
+	});
+	return res?.data?.docs;
+}

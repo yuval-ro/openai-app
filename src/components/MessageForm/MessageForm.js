@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { sendMessage } from '../../Client';
+import { sendMessage } from '../../Api';
 
 import './MessageForm.css';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
