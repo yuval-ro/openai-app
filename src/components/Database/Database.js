@@ -3,6 +3,7 @@ import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { getAllLogs } from '../../Api';
 import { map } from 'lodash';
 
+
 const Database = () => {
 	const [listOfLogs, setListOfLogs] = useState([]);
 
@@ -32,6 +33,7 @@ const Database = () => {
 					<td>{item?.prompt}</td>
 					<td>{item?.answer}</td>
 					<td><Button onClick={(item) => deleteItem(item?._id)}>Delete</Button></td>
+					<td><Button onClick={(item) => deleteItem(item?._id)}>Update</Button></td>
 				</tr>
 			)
 		})
@@ -41,7 +43,11 @@ const Database = () => {
 		<Container className='container-fluid'>
 			<Row className=''>
 				<Col className='border'>
-					<Button>Delete All</Button>
+					<div>Database Control</div>
+					<Button>Create</Button>
+					<Button>Read</Button>
+					<Button>Update</Button>
+					<Button>Delete</Button>
 				</Col>
 			</Row>
 			<Row className=''>
@@ -67,5 +73,6 @@ const Database = () => {
 		</Container>
 	)
 }
+
 
 export default Database;

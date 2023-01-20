@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export async function sendMessage(message) {
+
+const sendMessage = async (message) => {
 	const url = 'http://localhost:3001/api/davinci';
 	const data = { message };
 
@@ -13,7 +14,7 @@ export async function sendMessage(message) {
 	return res?.data?.message;
 }
 
-export async function authLogin(user, pass) {
+const authLogin = async (user, pass) => {
 	const url = 'http://localhost:3001/api/auth';
 	const data = { user, pass };
 
@@ -26,7 +27,7 @@ export async function authLogin(user, pass) {
 	return res?.data?.token;
 }
 
-export async function getAllLogs() {
+const getAllLogs = async () => {
 	const url = 'http://localhost:3001/api/getall';
 
 	const res = await axios({
@@ -35,3 +36,6 @@ export async function getAllLogs() {
 	});
 	return res?.data?.docs;
 }
+
+
+export { sendMessage, authLogin, getAllLogs };

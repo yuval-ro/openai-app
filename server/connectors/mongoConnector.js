@@ -1,17 +1,13 @@
 const { mongoose, Schema } = require('mongoose');
-
-
 const { connString, dbName, collName, logSchemaBody } = require('./consts');
-
 const logSchema = new Schema(
 	logSchemaBody,
 	{ collection: collName }
 );
 const LogModel = mongoose.model('LogModel', logSchema);
-
 mongoose.set('strictQuery', true);
-
 let isConnected = false;
+
 
 const init = async () => {
 	try {
@@ -27,7 +23,7 @@ const init = async () => {
 	}
 }
 
-async function logToDb(prompt, answer) { // saves a log document to our database
+const logToDb = async (prompt, answer) => { // saves a log document to our database
 	try {
 		await init();
 		const doc = new LogModel({
@@ -44,7 +40,7 @@ async function logToDb(prompt, answer) { // saves a log document to our database
 	}
 }
 
-async function getAllDocs(prompt, answer) { // saves a log document to our database
+const getAllDocs = async (prompt, answer) => { // saves a log document to our database
 	try {
 		await init();
 		return (await LogModel.find({}));
