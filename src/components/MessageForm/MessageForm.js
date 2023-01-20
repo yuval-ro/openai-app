@@ -27,12 +27,10 @@ const MessageForm = () => {
 
 	return (
 		<Container className='container-fluid'>
-			<Row className=''>
-				<Col className='border'>
-					<Form className='' onSubmit={handleSubmit}>
-						<Form.Label>
-							<h2>Chat with OpenAI</h2>
-						</Form.Label>
+			<Row>
+				<Col>
+					<h2>Chat with Davinci</h2>
+					<Form onSubmit={handleSubmit}>
 						<Form.Group className='' controlId=''>
 							<Form.Control type='text' placeholder='Enter your question here'
 								value={message}

@@ -5,10 +5,7 @@ import MessageForm from '../../components/MessageForm/MessageForm';
 
 
 const Home = () => (
-	<Container className='container-fluid border'>
-		<div>Home Container</div>
-		<MessageForm />
-	</Container>
+	<MessageForm />
 );
 
 export default Home;

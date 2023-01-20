@@ -4,10 +4,7 @@ import './Login.css';
 
 
 const Login = () => (
-	<React.Fragment>
-		<div>Login Container</div>
-		<LoginForm />
-	</React.Fragment>
+	<LoginForm />
 );
 
 export default Login;

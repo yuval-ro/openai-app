@@ -1,26 +1,23 @@
-import React from 'react';
-import { useSignOut } from 'react-auth-kit';
-import { Container, Button } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
-import Database from '../../components/Database/Database';
+import React, { useState } from 'react';
+
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+
+import { } from 'react-router-dom';
+
+import DBController from '../../components/DBController/DBController';
+import Logs from '../../components/Logs/Logs';
 import './Admin.css';
 
 
 const Admin = () => {
-	const signOut = useSignOut();
-	const navigate = useNavigate();
 
-	const logout = () => {
-		signOut();
-		navigate('/');
-	}
 
 	return (
-		<Container className='container-fluid border'>
-			<div>Admin Container</div>
-			<Button onClick={logout}>Logout</Button>
-			<Database />
-		</Container>
+		<React.Fragment>
+			<h2>Database</h2>
+			<DBController />
+			<Logs />
+		</React.Fragment>
 	)
 }
 

@@ -53,16 +53,14 @@ const LoginForm = () => {
 				</Toast.Body>
 			</Toast>
 			<Container className='container-fluid'>
-				<Row className=''>
-					<Col className='border'>
-						<Form className='' onSubmit={handleSubmit}>
-							<Form.Label>
-								<h2>Administrator Login</h2>
-							</Form.Label>
-							<Form.Group className='' controlId=''>
+				<Row>
+					<Col>
+						<h2>Administrator Login</h2>
+						<Form onSubmit={handleSubmit}>
+							<Form.Group>
 								<Form.Control type='text' placeholder='Username' value={user} onChange={e => onUserChange(e)}></Form.Control>
 							</Form.Group>
-							<Form.Group className='' controlId=''>
+							<Form.Group>
 								<Form.Control type='password' placeholder='Password' value={pass} onChange={e => onPassChange(e)}></Form.Control>
 							</Form.Group>
 							<Button variant='primary' type='submit'>Login</Button>

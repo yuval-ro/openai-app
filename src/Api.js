@@ -27,15 +27,54 @@ const authLogin = async (user, pass) => {
 	return res?.data?.token;
 }
 
-const getAllLogs = async () => {
-	const url = 'http://localhost:3001/api/getall';
+const createLog = async (log) => {
+	const res = await axios({
+		method: 'post',
+		url: 'http://localhost:3001/api/create',
+		data: log,
+	});
+}
 
+const getLog = async (log) => {
 	const res = await axios({
 		method: 'get',
-		url: url,
+		url: 'http://localhost:3001/api/get',
+		data: log
 	});
 	return res?.data?.docs;
 }
 
+const getAllLogs = async () => {
+	const res = await axios({
+		method: 'get',
+		url: 'http://localhost:3001/api/getall'
+	});
+	return res?.data?.docs;
+}
 
-export { sendMessage, authLogin, getAllLogs };
+const updateLog = async (log) => {
+	const res = await axios({
+		method: 'put',
+		url: 'http://localhost:3001/api/update',
+		data: log
+	});
+}
+
+const deleteLog = async (log) => {
+	const res = await axios({
+		method: 'delete',
+		url: 'http://localhost:3001/api/delete',
+		data: log
+	});
+}
+
+
+export {
+	sendMessage,
+	authLogin,
+	createLog,
+	getLog,
+	getAllLogs,
+	updateLog,
+	deleteLog
+};
