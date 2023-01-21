@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 app.listen(port, () => {
-	console.log(`Server started and listening on port ${port}`);
+	// console.log(`Server started and listening on port ${port}`);
 });
 
 app.post('/api/davinci', (req, res) => {
@@ -56,10 +56,15 @@ app.post('/api/auth', (req, res) => {
 				token: null
 			})
 	}
-})
+});
 
-app.get('/api/getall', (req, res) => {
-	mongoConnector.getAllDocs()
+app.post('/api/create', (req, res) => {
+
+});
+
+app.post('/api/read', (req, res) => {
+	const { query } = req?.body;
+	mongoConnector.getDocs(query)
 		.then((docs) => {
 			return res.json({ docs });
 		})
@@ -68,4 +73,16 @@ app.get('/api/getall', (req, res) => {
 				.status(500)
 				.json({ message: err.message });
 		});
-})
+});
+
+app.get('/api/read', (req, res) => {
+	mongoConnector.getDocs()
+		.then((docs) => {
+			return res.json({ docs });
+		})
+		.catch((err) => {
+			return res
+				.status(500)
+				.json({ message: err.message });
+		});
+});

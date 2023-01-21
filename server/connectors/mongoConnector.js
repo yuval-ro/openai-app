@@ -1,9 +1,7 @@
+const e = require('cors');
 const { mongoose, Schema } = require('mongoose');
 const { connString, dbName, collName, logSchemaBody } = require('./consts');
-const logSchema = new Schema(
-	logSchemaBody,
-	{ collection: collName }
-);
+const logSchema = new Schema(logSchemaBody, { collection: collName });
 const LogModel = mongoose.model('LogModel', logSchema);
 mongoose.set('strictQuery', true);
 let isConnected = false;
@@ -14,11 +12,11 @@ const init = async () => {
 		if (!isConnected) {
 			await mongoose.connect(`${connString}/${dbName}`, { autoIndex: false });
 			isConnected = true;
-			console.log(`Successfully connected to database '${dbName}'`);
+			// console.log(`Successfully connected to database '${dbName}'`);
 		}
 	}
 	catch (err) {
-		console.log(`Failed to connect to database '${dbName}'`);
+		// console.log(`Failed to connect to database '${dbName}'`);
 		console.error(JSON.stringify(err));
 	}
 }
@@ -31,25 +29,29 @@ const logToDb = async (prompt, answer) => { // saves a log document to our datab
 			answer: answer
 		});
 		await doc.save();
-		console.log(`Successfully saved a document to collection '${collName}':\n${doc}`);
+		// console.log(`Successfully saved a document to collection '${collName}':\n${doc}`);
 	}
 	catch (err) {
 		isConnected = false;
-		console.log(`Failed to save a document to '${dbName}/${collName}'`);
+		// console.log(`Failed to save a document to '${dbName}/${collName}'`);
 		throw err;
 	}
 }
 
-const getAllDocs = async (prompt, answer) => { // saves a log document to our database
+const getDocs = async (query) => {
 	try {
 		await init();
-		return (await LogModel.find({}));
+		docs = await LogModel.find({});
+		// docs = await LogModel.find({ 'prompt': /{query}/i });
+		// console.log('getdocs = ', docs);
+		return docs;
 	}
 	catch (err) {
 		isConnected = false;
-		console.log(`Failed to save a document to '${dbName}/${collName}'`);
+		// console.log(`Failed to save a document to '${dbName}/${collName}'`);
 		throw err;
 	}
 }
 
-module.exports = { logToDb, getAllDocs };
+
+module.exports = { logToDb, getDocs };
