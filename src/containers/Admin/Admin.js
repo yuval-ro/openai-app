@@ -8,20 +8,21 @@ import { readAll, readLog } from '../../Api';
 
 const Admin = () => {
 	const [query, setQuery] = useState('');
-	const [items, setItems] = useState([]);
+	const [items, setItems] = useState();
 
-	useEffect(() => {
-		setItems(
-			readAll()
-				.then((res) => {
-					return res;
-				})
-				.catch((err) => {
-					console.error(err);
-				})
-		);
+	// useEffect(() => {
+	// 	setItems(
+	// 		readAll()
+	// 			.then((res) => {
+	// 				console.log(res);
+	// 				return res;
+	// 			})
+	// 			.catch((err) => {
+	// 				console.error(err);
+	// 			})
+	// 	);
 
-	}, [])
+	// }, [])
 
 	const deleteItem = (id) => {
 		console.log(`todo: delete id = ${id}`);
@@ -33,10 +34,32 @@ const Admin = () => {
 		console.log(`todo: call getAllLogs() to refresh the page`);
 	}
 
+	const renderTableRows = async () => {
+		return (
+			map(items, (item, index) => {
+				return (
+					<tr>
+						<td>{(index + 1)}</td>
+						<td>{item?.prompt}</td>
+						<td>{item?.answer}</td>
+						<td>{item?.date}</td>
+						<td><Button variant='outline-dark' onClick={(item) => deleteItem(item?._id)}>Update</Button></td>
+						<td><Button variant='outline-danger' onClick={(item) => updateItem(item?._id)}>Delete</Button></td>
+					</tr>
+				)
+			})
+		)
+	}
+
 	return (
-		<Container>
-			<h2>Database</h2>
-			<Row>
+		<Container className='container-fluid border border-3'>
+			<Row className='mt-5 mb-5 border border-1'>
+				<Col className='fs-1'>
+					Database
+				</Col>
+			</Row>
+
+			<Row className='mt-5 mb-5 border border-1'>
 				<Col>
 					<Form>
 						<Form.Group controlId=''>
@@ -47,7 +70,8 @@ const Admin = () => {
 					</Form>
 				</Col>
 			</Row>
-			<Row>
+
+			<Row className='mt-5 mb-5 border border-1'>
 				<Col>
 					<Table responsive>
 						<thead>
@@ -61,20 +85,7 @@ const Admin = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{
-								map(items, (item, index) => {
-									return (
-										<tr>
-											<td>{(index + 1)}</td>
-											<td>{item?.prompt}</td>
-											<td>{item?.answer}</td>
-											<td>{item?.date}</td>
-											<td><Button variant='outline-dark' onClick={(item) => deleteItem(item?._id)}>Update</Button></td>
-											<td><Button variant='outline-danger' onClick={(item) => updateItem(item?._id)}>Delete</Button></td>
-										</tr>
-									)
-								})
-							}
+							{renderTableRows}
 						</tbody>
 					</Table>
 				</Col>

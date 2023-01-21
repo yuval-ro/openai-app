@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -9,25 +9,46 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider, RequireAuth } from 'react-auth-kit';
 import { Container } from 'react-bootstrap';
 
-const App = () => (
-	<Container className='container-fluid border'>
+const App = () => {
+	const [isLoggedIn, setIsLoggedIn] = useState(false); // for showing the 'Logout' button in the header container
+
+	return (
 		<AuthProvider>
 			<BrowserRouter>
-				<Header />
+				<Header
+					isLoggedIn={isLoggedIn}
+					setIsLoggedIn={setIsLoggedIn}
+				/>
 				<Routes>
-					<Route path='/' element={<Home />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/admin' element={
-						<RequireAuth loginPath={'/login'}>
-							<Admin />
-						</RequireAuth>
-					} />
+					<Route
+						path='/'
+						element={<Home />}
+					/>
+					<Route
+						path='/login'
+						element={
+							<Login
+								isLoggedIn={isLoggedIn}
+								setIsLoggedIn={setIsLoggedIn}
+							/>
+						}
+					/>
+					<Route
+						path='/admin'
+						element={
+							<RequireAuth loginPath={'/login'}>
+								<Admin
+									isLoggedIn={isLoggedIn}
+									setIsLoggedIn={setIsLoggedIn}
+								/>
+							</RequireAuth>
+						} />
 				</Routes>
 				<Footer />
 			</BrowserRouter>
 		</AuthProvider>
-	</Container >
-);
+	)
+};
 
 
 export default App;

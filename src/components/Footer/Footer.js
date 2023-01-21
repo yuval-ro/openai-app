@@ -5,8 +5,8 @@ import Logo from './logo.svg';
 
 
 const Footer = () => (
-	<Container className='container-fluid border'>
-		<Row>
+	<Container className='container-fluid border border-3'>
+		<Row className='mt-5 mb-5 border border-1'>
 			<Col>
 				<div className='d-flex justify-content-center align-items-center'>
 					{/* <div className='text-muted'>© 2023 Company, Inc</div> */}
