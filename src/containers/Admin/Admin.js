@@ -68,27 +68,25 @@ const Admin = () => {
 	}
 
 	return (
-		<Container className='container-fluid border border-3'>
-			<Row className='mt-5 mb-5 border border-1'>
-				<Col className='fs-1'>
-					Database
-				</Col>
+		<Container className='container-fluid'>
+			<Row>
+				<Col className='fs-1 my-2 px-0'> Database </Col>
 			</Row>
 
-			<Row className='mt-5 mb-5 border border-1'>
-				<Col>
+			<Row>
+				<Col className='my-2 px-0'>
 					<Form>
-						<Form.Group controlId=''>
-							<Form.Control type='text' placeholder='Find a log...'
-								onChange={(e) => setQuery(e?.target?.value)}
-							/>
-						</Form.Group>
+						<Form.Control
+							className='w-50'
+							type='text'
+							placeholder='Find a log...'
+							onChange={(e) => setQuery(e?.target?.value)} />
 					</Form>
 				</Col>
 			</Row>
 
-			<Row className='mt-5 mb-5 border border-1'>
-				<Col>
+			<Row>
+				<Col className='my-2 px-0'>
 					<Table responsive>
 						<thead>
 							<tr>

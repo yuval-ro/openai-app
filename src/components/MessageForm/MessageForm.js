@@ -4,7 +4,7 @@ import './MessageForm.css';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 
 
-const MessageForm = ({ updateConverse }) => {
+const MessageForm = ({ updateConverse, clearConversation }) => {
 	const [currentPrompt, setCurrentPrompt] = useState('');
 
 	const handleSubmit = (e) => {
@@ -24,19 +24,33 @@ const MessageForm = ({ updateConverse }) => {
 		setCurrentPrompt(e?.target?.value);
 	}
 
+	const onClearButtonClick = (e) => {
+		e.preventDefault();
+		clearConversation();
+	}
+
 	return (
-		<Row className='mt-5 mb-5 border bt-1'>
-			<Col>
-				<Form onSubmit={handleSubmit}>
-					<Form.Group className='' controlId=''>
-						<Form.Control
-							value={currentPrompt}
-							type='text'
-							placeholder='Ask me anything...'
-							onChange={e => onMessageFormChange(e)} ></Form.Control>
-					</Form.Group>
-					<Button variant='primary' type='submit'>Submit</Button>
+		<Row >
+			<Col className='d-flex my-1 px-0'>
+				<Form
+					className='d-flex col-9'
+					onSubmit={handleSubmit}
+				>
+					<Form.Control className=''
+						value={currentPrompt}
+						type='text'
+						placeholder='Ask me anything...'
+						onChange={e => onMessageFormChange(e)} >
+					</Form.Control>
+					<Button className='mx-1' variant='primary' type='submit'>Submit</Button>
 				</Form>
+				<Button
+					className='ms-auto'
+					variant='outline-danger'
+					onClick={onClearButtonClick}
+				>
+					Clear
+				</Button>
 			</Col>
 		</Row>
 	);

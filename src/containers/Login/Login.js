@@ -4,16 +4,16 @@ import LoginForm from '../../components/LoginForm/LoginForm';
 import './Login.css';
 
 
-const Login = (props) => {
+const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 
 	const onSuccessfulLogin = () => {
-		props.setIsLoggedIn(true);
+		setIsLoggedIn(true);
 	}
 
 	return (
-		<Container className='container-fluid border border-3'>
-			<Row className='mt-5 mb-5 border border-1'>
-				< Col className='fs-1' >
+		<Container className='container-fluid'>
+			<Row>
+				< Col className='fs-1 my-1 px-0' >
 					Administrator Login
 				</Col >
 			</Row >

@@ -7,7 +7,7 @@ import { useSignIn } from 'react-auth-kit';
 import { useNavigate } from 'react-router-dom';
 
 
-const LoginForm = (props) => {
+const LoginForm = ({ onSuccessfulLogin }) => {
 	const [user, setUser] = useState('');
 	const [pass, setPass] = useState('');
 	const [loginToast, setLoginToast] = useState(false);
@@ -23,9 +23,8 @@ const LoginForm = (props) => {
 					expiresIn: 5, // minutes
 					tokenType: 'Bearer',
 				});
-				console.log(props);
 				navigate('/admin'); // redirect after successfull login
-				props.onSuccessfulLogin();
+				onSuccessfulLogin();
 			})
 			.catch((err) => {
 				console.error(err);
@@ -54,16 +53,31 @@ const LoginForm = (props) => {
 					Login credentials are incorrect.
 				</Toast.Body>
 			</Toast>
-			<Row className='mt-5 mb-5 border border-1'>
-				<Col>
-					<Form onSubmit={handleSubmit}>
-						<Form.Group>
-							<Form.Control type='text' placeholder='Username' value={user} onChange={e => onUserChange(e)}></Form.Control>
-						</Form.Group>
-						<Form.Group>
-							<Form.Control type='password' placeholder='Password' value={pass} onChange={e => onPassChange(e)}></Form.Control>
-						</Form.Group>
-						<Button variant='primary' type='submit'>Login</Button>
+			<Row>
+				<Col className='d-flex flex-col my-1 px-0'>
+					<Form
+						className='w-50'
+						onSubmit={handleSubmit}
+					>
+						<Form.Control
+							className='my-1'
+							value={user}
+							type='text'
+							placeholder='Username'
+							onChange={e => onUserChange(e)}
+						/>
+						<Form.Control
+							className='my-1'
+							value={pass}
+							type='password'
+							placeholder='Password'
+							onChange={e => onPassChange(e)}
+						/>
+						<Button
+							className='my-1'
+							variant='primary'
+							type='submit'
+						>Login</Button>
 					</Form>
 				</Col>
 			</Row>

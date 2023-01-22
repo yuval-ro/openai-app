@@ -13,7 +13,10 @@ const Home = () => {
 		let oldConverse = converse;
 		oldConverse.push(newConverse);
 		setConverse([...oldConverse]);
-		console.log(converse);
+	}
+
+	const clearConversation = () => {
+		setConverse([]);
 	}
 
 	const renderConversation = () => {
@@ -28,20 +31,22 @@ const Home = () => {
 	}
 
 	return (
-		<Container className='container-fluid border border-3'>
-			<Row className='mt-5 mb-5 border border-1'>
-				<Col className='fs-1'>
-					Chat with Davinci
+		<Container className='container-fluid'>
+			<Row>
+				<Col className='fs-1 my-1 px-0'> Chat with Davinci </Col>
+			</Row>
+
+			<Row>
+				<Col
+					className='overflow-auto border border-2 rounded-3 my-1'
+					style={{ 'min-height': '400px', 'max-height': '400px' }}>
+					{renderConversation()}
 				</Col>
 			</Row>
 
-			<React.Fragment>
-				{renderConversation()}
-			</React.Fragment>
-
 			<MessageForm
 				updateConverse={updateConverse}
-			/>
+				clearConversation={clearConversation} />
 		</Container>
 	)
 }

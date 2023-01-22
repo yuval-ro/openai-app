@@ -7,6 +7,8 @@ import Admin from './containers/Admin/Admin';
 import Login from './containers/Login/Login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider, RequireAuth } from 'react-auth-kit';
+import About from './containers/About/About';
+import NotFound from './containers/NotFound/NotFound';
 
 const App = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false); // 'Logout' Button functionality
@@ -25,23 +27,24 @@ const App = () => {
 					/>
 					<Route
 						path='/login'
-						element={
-							<Login
-								isLoggedIn={isLoggedIn}
-								setIsLoggedIn={setIsLoggedIn}
-							/>
-						}
+						element={<Login
+							isLoggedIn={isLoggedIn}
+							setIsLoggedIn={setIsLoggedIn} />}
+					/>
+					<Route
+						path='/about'
+						element={<About />}
 					/>
 					<Route
 						path='/admin'
 						element={
 							<RequireAuth loginPath={'/login'}>
-								<Admin
-									isLoggedIn={isLoggedIn}
-									setIsLoggedIn={setIsLoggedIn}
-								/>
-							</RequireAuth>
-						} />
+								<Admin />
+							</RequireAuth>} />
+					<Route
+						path='/*'
+						element={<NotFound />}
+					/>
 				</Routes>
 				<Footer />
 			</BrowserRouter>

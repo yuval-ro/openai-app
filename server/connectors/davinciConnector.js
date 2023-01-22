@@ -17,7 +17,7 @@ async function promptDavinci(prompt, tokens) {
 			const response = await openai.createCompletion({
 				model: 'text-davinci-003',
 				prompt: `${prompt}`,
-				max_tokens: tokens,
+				max_tokens: 50,
 				temperature: 0,
 			});
 			answer = response.data.choices[0].text;
