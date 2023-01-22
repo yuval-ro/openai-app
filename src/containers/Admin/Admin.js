@@ -35,13 +35,10 @@ const Admin = () => {
 			.catch((err) => {
 				console.error(err);
 			})
-		console.log(`todo: delete id = ${id}`);
-		console.log(`todo: call getAllLogs() to refresh the page`);
 	}
 
 	const updateItem = (id) => {
-		console.log(`todo: update id = ${id}`);
-		console.log(`todo: call getAllLogs() to refresh the page`);
+		// todo: update the item corr. with '_id'
 	}
 
 	const renderTableRows = (items, filterBy = '') => {
@@ -57,7 +54,7 @@ const Admin = () => {
 							<td>{(index + 1)}</td>
 							<td>{item?.prompt}</td>
 							<td>{item?.answer}</td>
-							<td>{moment(item?.date).format('MMMM Do YYYY, h:mm:ss a')}</td>
+							<td>{moment(item?.date).format('HH:mm:ss @ DD/MM/YYYY')}</td>
 							<td><Button variant='outline-dark' onClick={(item) => updateItem(item?._id)}>Update</Button></td>
 							<td><Button variant='outline-danger' onClick={() => deleteItem(item?._id)}>Delete</Button></td>
 						</tr>
@@ -70,11 +67,11 @@ const Admin = () => {
 	return (
 		<Container className='container-fluid'>
 			<Row>
-				<Col className='fs-1 my-2 px-0'> Database </Col>
+				<Col className='fs-1 my-1 px-0'> Database </Col>
 			</Row>
 
 			<Row>
-				<Col className='my-2 px-0'>
+				<Col className='my-1 px-0'>
 					<Form>
 						<Form.Control
 							className='w-50'
@@ -86,7 +83,7 @@ const Admin = () => {
 			</Row>
 
 			<Row>
-				<Col className='my-2 px-0'>
+				<Col className='my-1 px-0'>
 					<Table responsive>
 						<thead>
 							<tr>
