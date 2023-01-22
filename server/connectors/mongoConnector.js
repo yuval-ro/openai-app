@@ -53,5 +53,16 @@ const getDocs = async (query) => {
 	}
 }
 
+const deleteDocById = async (id) => {
+	try {
+		await init();
+		await LogModel.deleteOne({ _id: id });
+	}
+	catch (err) {
+		isConnected = false;
+		// console.log(`Failed to save a document to '${dbName}/${collName}'`);
+		throw err;
+	}
+}
 
-module.exports = { logToDb, getDocs };
+module.exports = { logToDb, getDocs, deleteDocById };

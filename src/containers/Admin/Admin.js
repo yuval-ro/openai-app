@@ -1,30 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Table, Button, Form } from 'react-bootstrap';
-import { map } from 'lodash';
+import { chain, map } from 'lodash';
+import moment from 'moment';
 
 import './Admin.css';
-import { readAll, readLog } from '../../Api';
+import { readAll, readLog, deleteLog } from '../../Api';
 
 
 const Admin = () => {
 	const [query, setQuery] = useState('');
 	const [items, setItems] = useState();
 
-	// useEffect(() => {
-	// 	setItems(
-	// 		readAll()
-	// 			.then((res) => {
-	// 				console.log(res);
-	// 				return res;
-	// 			})
-	// 			.catch((err) => {
-	// 				console.error(err);
-	// 			})
-	// 	);
-
-	// }, [])
+	useEffect(() => {
+		readAll()
+			.then((res) => {
+				setItems(res);
+			})
+			.catch((err) => {
+				console.error(err);
+			})
+	}, [])
 
 	const deleteItem = (id) => {
+		deleteLog(id)
+			.then(() => {
+				readAll()
+					.then((res) => {
+						setItems(res);
+					})
+					.catch((err) => {
+						console.error(err);
+					})
+			})
+			.catch((err) => {
+				console.error(err);
+			})
 		console.log(`todo: delete id = ${id}`);
 		console.log(`todo: call getAllLogs() to refresh the page`);
 	}
@@ -34,20 +44,26 @@ const Admin = () => {
 		console.log(`todo: call getAllLogs() to refresh the page`);
 	}
 
-	const renderTableRows = async () => {
+	const renderTableRows = (items, filterBy = '') => {
 		return (
-			map(items, (item, index) => {
-				return (
-					<tr>
-						<td>{(index + 1)}</td>
-						<td>{item?.prompt}</td>
-						<td>{item?.answer}</td>
-						<td>{item?.date}</td>
-						<td><Button variant='outline-dark' onClick={(item) => deleteItem(item?._id)}>Update</Button></td>
-						<td><Button variant='outline-danger' onClick={(item) => updateItem(item?._id)}>Delete</Button></td>
-					</tr>
-				)
-			})
+			chain(items)
+				.filter((item) => {
+					// if substring return true:
+					return (item?.prompt?.includes(filterBy) || item?.answer?.includes(filterBy));
+				})
+				.map((item, index) => {
+					return (
+						<tr id={index}>
+							<td>{(index + 1)}</td>
+							<td>{item?.prompt}</td>
+							<td>{item?.answer}</td>
+							<td>{moment(item?.date).format('MMMM Do YYYY, h:mm:ss a')}</td>
+							<td><Button variant='outline-dark' onClick={(item) => updateItem(item?._id)}>Update</Button></td>
+							<td><Button variant='outline-danger' onClick={() => deleteItem(item?._id)}>Delete</Button></td>
+						</tr>
+					)
+				})
+				.value()
 		)
 	}
 
@@ -85,7 +101,7 @@ const Admin = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{renderTableRows}
+							{renderTableRows(items, query)}
 						</tbody>
 					</Table>
 				</Col>

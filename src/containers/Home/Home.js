@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import MessageForm from '../../components/MessageForm/MessageForm';
-import MessageWindow from '../../components/MessageWindow/MessageWindow';
+import ConverseRow from '../../components/ConverseRow/ConverseRow';
+import { map } from 'lodash';
 
 const Home = () => {
+	const [converse, setConverse] = useState([]);
 
-	const [message, setMessage] = useState('');
-	const [response, setResponse] = useState('');
+
+	const updateConverse = (newConverse) => {
+		let oldConverse = converse;
+		oldConverse.push(newConverse);
+		setConverse([...oldConverse]);
+		console.log(converse);
+	}
+
+	const renderConversation = () => {
+		return (
+			map(converse, (c) => {
+				const { prompt, answer } = c;
+				return (
+					<ConverseRow prompt={prompt} answer={answer} />
+				)
+			})
+		)
+	}
 
 	return (
 		<Container className='container-fluid border border-3'>
@@ -17,13 +35,12 @@ const Home = () => {
 				</Col>
 			</Row>
 
-			<MessageWindow />
+			<React.Fragment>
+				{renderConversation()}
+			</React.Fragment>
 
 			<MessageForm
-				message={message}
-				setMessage={setMessage}
-				response={response}
-				setResponse={setResponse}
+				updateConverse={updateConverse}
 			/>
 		</Container>
 	)

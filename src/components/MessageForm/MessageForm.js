@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { sendMessage } from '../../Api';
-
 import './MessageForm.css';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 
 
-
-const MessageForm = (props) => {
+const MessageForm = ({ updateConverse }) => {
+	const [currentPrompt, setCurrentPrompt] = useState('');
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		sendMessage(props.message)
+		sendMessage(currentPrompt)
 			.then((res) => {
-				props.setResponse(res);
+				updateConverse({ prompt: currentPrompt, answer: res });
+				setCurrentPrompt('');
 			})
 			.catch((err) => {
 				console.error(err);
@@ -21,15 +21,18 @@ const MessageForm = (props) => {
 
 	const onMessageFormChange = (e) => {
 		e.preventDefault();
-		props.setMessage(e?.target?.value);
+		setCurrentPrompt(e?.target?.value);
 	}
 
 	return (
-		<Row className='mt-5 mb-5 border border-1'>
+		<Row className='mt-5 mb-5 border bt-1'>
 			<Col>
 				<Form onSubmit={handleSubmit}>
 					<Form.Group className='' controlId=''>
-						<Form.Control type='text' placeholder='Ask me anything...'
+						<Form.Control
+							value={currentPrompt}
+							type='text'
+							placeholder='Ask me anything...'
 							onChange={e => onMessageFormChange(e)} ></Form.Control>
 					</Form.Group>
 					<Button variant='primary' type='submit'>Submit</Button>

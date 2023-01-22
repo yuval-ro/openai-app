@@ -38,11 +38,10 @@ const createLog = async (log) => {
 }
 
 const readLog = async (query) => {
-	const data = { query };
 	const res = await axios({
 		method: 'post',
 		url: 'http://localhost:3001/api/read',
-		data: data
+		data: { query }
 	});
 	return res?.data?.docs;
 }
@@ -64,11 +63,11 @@ const updateLog = async (log) => {
 	});
 }
 
-const deleteLog = async (log) => {
+const deleteLog = async (id) => {
 	const res = await axios({
 		method: 'delete',
 		url: 'http://localhost:3001/api/delete',
-		data: log
+		data: { id }
 	});
 }
 

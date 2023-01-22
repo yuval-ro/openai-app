@@ -7,10 +7,9 @@ import Admin from './containers/Admin/Admin';
 import Login from './containers/Login/Login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider, RequireAuth } from 'react-auth-kit';
-import { Container } from 'react-bootstrap';
 
 const App = () => {
-	const [isLoggedIn, setIsLoggedIn] = useState(false); // for showing the 'Logout' button in the header container
+	const [isLoggedIn, setIsLoggedIn] = useState(false); // 'Logout' Button functionality
 
 	return (
 		<AuthProvider>

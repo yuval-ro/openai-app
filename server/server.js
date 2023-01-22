@@ -86,3 +86,16 @@ app.get('/api/read', (req, res) => {
 				.json({ message: err.message });
 		});
 });
+
+app.delete('/api/delete', (req, res) => {
+	const { id } = req?.body;
+	mongoConnector.deleteDocById(id)
+		.then(() => {
+			return res.json({ successful: true });
+		})
+		.catch((err) => {
+			return res
+				.status(500)
+				.json({ successful: false, message: err.message });
+		});
+})
