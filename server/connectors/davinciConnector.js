@@ -7,6 +7,7 @@ const config = new Configuration({
 });
 const openai = new OpenAIApi(config);
 const testing = true;
+const model = 'text-davinci-003'
 
 async function promptDavinci(prompt, tokens) {
 	try {
@@ -15,9 +16,9 @@ async function promptDavinci(prompt, tokens) {
 			answer = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat ac est ut elementum. Maecenas ornare ligula vel ex ullamcorper aliquam. Sed sodales eleifend lacus vitae tristique.';
 		} else {
 			const response = await openai.createCompletion({
-				model: 'text-davinci-003',
+				model: model,
 				prompt: `${prompt}`,
-				max_tokens: 50,
+				max_tokens: tokens,
 				temperature: 0,
 			});
 			answer = response.data.choices[0].text;
