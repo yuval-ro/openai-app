@@ -73,10 +73,12 @@ app.put('/api/update', (req, res) => {
 
 app.get('/api/read', (req, res) => {
 	mongoConnector.getDocs()
-		.then((docs) => {
+		.then(docs => {
+			console.log('@/api/read:')
+			console.log(docs)
 			return res.json({ docs });
 		})
-		.catch((err) => {
+		.catch(err => {
 			return res
 				.status(500)
 				.json({ message: err.message });

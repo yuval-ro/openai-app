@@ -10,9 +10,9 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 	const navigate = useNavigate();
 
 	const logout = () => {
-		signOut();
-		navigate('/');
-		setIsLoggedIn(false);
+		signOut()
+		navigate('/')
+		setIsLoggedIn(false)
 	}
 
 	return (
@@ -29,17 +29,11 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 						<Button variant='outline-secondary'>Admin</Button>
 					</Link>
 					{
-						isLoggedIn ? (
-							<div className='ms-auto me-0'>
-								<Button
-									onClick={logout}
-									className='ms-1'
-									variant='outline-danger'>
-									Logout
-								</Button>
-							</div>
-
-						) : null
+						isLoggedIn ?
+							<Button onClick={logout}
+								className='ms-auto me-0'
+								variant='outline-danger'>Logout</Button>
+							: null
 					}
 				</Col>
 			</Row>

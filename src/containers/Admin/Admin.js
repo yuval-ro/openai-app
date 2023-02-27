@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Table, Button, Form, ButtonGroup, Tabs, NavItem, Tab } from 'react-bootstrap';
-import { chain, map } from 'lodash';
-import moment from 'moment';
-import './Admin.css';
-import { readAll, deleteLog, createLog, updateLog } from '../../Api';
+import React, { useState, useEffect } from 'react'
+import { Container, Row, Col, Table, Button, Form, ButtonGroup, Tabs, NavItem, Tab } from 'react-bootstrap'
+import { chain, map } from 'lodash'
+import moment from 'moment'
+import './Admin.css'
+import { readAll, deleteLog, createLog, updateLog } from '../../Api'
 
 
 const Admin = () => {
@@ -11,9 +11,7 @@ const Admin = () => {
 	const [items, setItems] = useState();
 	const [prompt, setPrompt] = useState('');
 	const [answer, setAnswer] = useState('');
-	const [selectedId, setSelectedId] = useState('');
-	const [selectedPrompt, setSelectedPrompt] = useState('');
-	const [selectedAnswer, setSelectedAnswer] = useState('');
+	const [selectedLog, setSelectedLog] = useState({ id: '', prompt: '', answer: '' });
 	const [activeTab, setActiveTab] = useState('database')
 
 	useEffect(() => {
@@ -26,20 +24,16 @@ const Admin = () => {
 			})
 	}, [])
 
+	const refreshLogs = () => {
+		readAll()
+			.then(res => {
+				setItems(res)
+			})
+	}
+
 	const deleteItem = (id) => {
 		deleteLog(id)
-			.then(() => {
-				readAll()
-					.then((res) => {
-						setItems(res);
-					})
-					.catch((err) => {
-						console.error(err);
-					})
-			})
-			.catch((err) => {
-				console.error(err);
-			})
+		refreshLogs()
 	}
 
 	const renderTableRows = (items, filterBy = '') => {
@@ -61,7 +55,7 @@ const Admin = () => {
 									<Button classname=''
 										eventKey='update'
 										variant='outline-warning'
-										onClick={() => handleUpdate(item?._id, item?.prompt, item?.answer)}>Update</Button>
+										onClick={() => handleUpdateButton(item?._id, item?.prompt, item?.answer)}>Update</Button>
 									<Button classname=''
 										variant='outline-danger'
 										onClick={() => deleteItem(item?._id)}>Delete</Button>
@@ -75,60 +69,43 @@ const Admin = () => {
 	}
 
 	const onPromptChange = (e) => {
-		setPrompt(e?.target?.value);
+		setPrompt(e?.target?.value)
 	}
 
 	const onAnswerChange = (e) => {
-		setAnswer(e?.target?.value);
+		setAnswer(e?.target?.value)
 	}
 
-	const handleCreate = (e) => {
-		// e.preventDefault()
+	const handleCreateSubmit = (e) => {
+		e.preventDefault()
 		createLog(prompt, answer)
 			.then(() => {
-				readAll()
-					.then(res => {
-						setItems(res)
-						setPrompt('')
-						setAnswer('')
-						setActiveTab('database')
-					})
-					.catch(err => {
-						console.error(err)
-					})
+				refreshLogs()
+				setPrompt('')
+				setAnswer('')
+				setActiveTab('database')
 			})
-			.catch(err => {
-				console.error(err)
-			})
-
-		// TODO find out why page refresh? something to do with 'e' arg
 	}
 
-	const handleUpdate = (selectedId, selectedPrompt, selectedAnswer) => {
-		// e.preventDefault();
-		setSelectedPrompt(selectedPrompt)
-		setSelectedAnswer(selectedAnswer)
-		setSelectedId(selectedId)
+	const handleUpdateButton = (selectedId, selectedPrompt, selectedAnswer) => {
+		setSelectedLog({
+			id: selectedId,
+			prompt: selectedPrompt,
+			answer: selectedAnswer
+		})
 		setActiveTab('update')
 	};
 
-	const handleUpdateLog = () => {
-		updateLog(selectedId, prompt, answer)
-			.then(() => {
-				readAll()
-					.then(res => {
-						setItems(res);
-					})
-					.catch(err => {
-						console.error(err);
-					})
-				setPrompt('')
-				setAnswer('')
-			})
-			.catch(err => {
-				console.error(err)
-			})
-		// TODO find out why page refresh happen?
+	const handleUpdateLogSubmit = async (e) => {
+		e.preventDefault()
+		try {
+			updateLog(selectedLog.id, prompt, answer)
+			await refreshLogs()
+			setActiveTab('database')
+		}
+		catch (err) {
+			console.error(err)
+		}
 	}
 
 	return (
@@ -171,7 +148,7 @@ const Admin = () => {
 					<Row className='mt-2'>
 						<Form
 							className=''
-							onSubmit={e => handleCreate(e)}>
+							onSubmit={handleCreateSubmit}>
 							<Form.Control
 								className='my-1'
 								value={prompt}
@@ -198,19 +175,19 @@ const Admin = () => {
 					<Row className='mt-2'>
 						<Form
 							className=''
-							onSubmit={handleUpdateLog}>
+							onSubmit={handleUpdateLogSubmit}>
 							<Form.Control
 								className='my-1'
 								value={prompt}
 								type='text'
-								placeholder={selectedPrompt}
+								placeholder={selectedLog.prompt}
 								onChange={e => onPromptChange(e)}
 								required />
 							<Form.Control
 								className='my-1'
 								value={answer}
 								type='text'
-								placeholder={selectedAnswer}
+								placeholder={selectedLog.answer}
 								onChange={e => onAnswerChange(e)}
 								required />
 							<Button
