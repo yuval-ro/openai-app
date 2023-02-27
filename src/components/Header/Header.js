@@ -30,12 +30,15 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 					</Link>
 					{
 						isLoggedIn ? (
-							<Button
-								onClick={logout}
-								variant='outline-danger'
-								className='ms-auto me-0'>
-								Logout
-							</Button>
+							<div className='ms-auto me-0'>
+								<Button
+									onClick={logout}
+									className='ms-1'
+									variant='outline-danger'>
+									Logout
+								</Button>
+							</div>
+
 						) : null
 					}
 				</Col>

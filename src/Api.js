@@ -1,49 +1,34 @@
 import axios from 'axios';
 
-
 const sendMessage = async (message) => {
 	const url = 'http://localhost:3001/api/davinci';
 	const data = { message };
-
 	const res = await axios({
 		method: 'post',
 		url: url,
 		data: data,
 	});
-
 	return res?.data?.message;
 }
 
 const authLogin = async (user, pass) => {
 	const url = 'http://localhost:3001/api/auth';
 	const data = { user, pass };
-
 	const res = await axios({
 		method: 'post',
 		url: url,
 		data: data,
 	});
-
 	return res?.data?.token;
 }
 
-const createLog = async (log) => {
-	const data = { log };
+const createLog = async (prompt, answer) => {
+	const data = { prompt: prompt, answer: answer };
 	const res = await axios({
 		method: 'post',
 		url: 'http://localhost:3001/api/create',
 		data: data,
 	});
-	console.log(res);
-}
-
-const readLog = async (query) => {
-	const res = await axios({
-		method: 'post',
-		url: 'http://localhost:3001/api/read',
-		data: { query }
-	});
-	return res?.data?.docs;
 }
 
 const readAll = async () => {
@@ -51,15 +36,15 @@ const readAll = async () => {
 		method: 'get',
 		url: 'http://localhost:3001/api/read',
 	});
-	// console.log(res?.data?.docs);
 	return res?.data?.docs;
 }
 
-const updateLog = async (log) => {
+const updateLog = async (id, prompt, answer) => {
+	const data = { id: id, prompt: prompt, answer: answer };
 	const res = await axios({
 		method: 'put',
 		url: 'http://localhost:3001/api/update',
-		data: log
+		data: data
 	});
 }
 
@@ -71,13 +56,11 @@ const deleteLog = async (id) => {
 	});
 }
 
-
 export {
 	sendMessage,
 	authLogin,
 	createLog,
-	readLog,
 	readAll,
 	updateLog,
 	deleteLog
-};
+}

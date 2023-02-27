@@ -65,4 +65,18 @@ const deleteDocById = async (id) => {
 	}
 }
 
-module.exports = { logToDb, getDocs, deleteDocById };
+const updateDocById = async (id, prompt, answer) => {
+	try {
+		await init();
+		const filter = { _id: id }
+		const update = { prompt: prompt, answer: answer }
+		await LogModel.findOneAndUpdate(filter, update)
+	}
+	catch (err) {
+		isConnected = false;
+		console.log(`Failed to update document in '${dbName}/${collName}'`);
+		throw err;
+	}
+}
+
+module.exports = { logToDb, getDocs, deleteDocById, updateDocById };

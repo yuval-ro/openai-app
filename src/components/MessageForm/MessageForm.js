@@ -34,23 +34,18 @@ const MessageForm = ({ updateConverse, clearConversation }) => {
 			<Col className='d-flex my-1 px-0'>
 				<Form
 					className='d-flex col-9'
-					onSubmit={handleSubmit}
-				>
+					onSubmit={handleSubmit}>
 					<Form.Control className=''
 						value={currentPrompt}
 						type='text'
 						placeholder='Ask me anything...'
-						onChange={e => onMessageFormChange(e)} >
-					</Form.Control>
+						onChange={e => onMessageFormChange(e)} />
 					<Button className='mx-1' variant='primary' type='submit'>Submit</Button>
 				</Form>
 				<Button
 					className='ms-auto'
 					variant='outline-danger'
-					onClick={onClearButtonClick}
-				>
-					Clear
-				</Button>
+					onClick={onClearButtonClick}>Clear</Button>
 			</Col>
 		</Row>
 	);

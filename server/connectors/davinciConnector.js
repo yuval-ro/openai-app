@@ -12,7 +12,7 @@ async function promptDavinci(prompt, tokens) {
 	try {
 		let answer = null;
 		if (testing) {
-			answer = 'davinci answer';
+			answer = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat ac est ut elementum. Maecenas ornare ligula vel ex ullamcorper aliquam. Sed sodales eleifend lacus vitae tristique.';
 		} else {
 			const response = await openai.createCompletion({
 				model: 'text-davinci-003',
