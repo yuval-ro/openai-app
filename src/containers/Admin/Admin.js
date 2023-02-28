@@ -3,24 +3,23 @@ import { Container, Row, Button, Form, ButtonGroup, Tabs, Tab } from 'react-boot
 import { chain } from 'lodash'
 import moment from 'moment'
 import './Admin.css'
-import { readAll, deleteLog, createLog, updateLog } from '../../Api'
+import { readLogs, deleteLog, createLog, updateLog } from '../../Api'
 import Items from '../../components/AdminComponents/Items'
 import Create from '../../components/AdminComponents/Create'
 import Update from '../../components/AdminComponents/Update'
 
-
 const Admin = () => {
   const [query, setQuery] = useState('');
   const [items, setItems] = useState();
-  const [prompt, setPrompt] = useState('');
-  const [answer, setAnswer] = useState('');
   const [selectedLog, setSelectedLog] = useState({ id: '', prompt: '', answer: '' });
   const [activeTab, setActiveTab] = useState('database')
 
   useEffect(() => {
+    console.log('useEffect called!')
     const init = async () => {
       try {
-        await refreshItems()
+        const freshItems = await readLogs()
+        setItems(freshItems)
       }
       catch (err) {
         console.error(err)
@@ -28,17 +27,6 @@ const Admin = () => {
     }
     init()
   }, [])
-
-  // functions:
-  const refreshItems = async () => {
-    try {
-      const res = await readAll()
-      setItems(res)
-    }
-    catch (err) {
-      console.error(err)
-    }
-  }
 
   const renderTableRows = (items, filterBy = '') => (
     chain(items)
@@ -49,19 +37,23 @@ const Admin = () => {
       .map((item, index) => {
         return (
           <tr id={index} style={{ 'vertical-align': 'middle' }}>
-            <td>{(index + 1)}</td>
-            <td>{item?.prompt}</td>
-            <td>{item?.answer}</td>
+            <td style={{ "font-weight": "bold" }}>{(index + 1)}</td>
+            <td>"{item?.prompt}"</td>
+            <td>"{item?.answer}"</td>
             <td>{moment(item?.date).format('HH:mm:ss @ DD/MM/YYYY')}</td>
             <td>
               <ButtonGroup>
                 <Button classname=''
                   eventKey='update'
                   variant='outline-warning'
-                  onClick={() => handleUpdateButton(item?._id, item?.prompt, item?.answer)}>Update</Button>
+                  onClick={() => {
+                    handleUpdateButton(item?._id, item?.prompt, item?.answer)
+                  }}>Update</Button>
                 <Button classname=''
                   variant='outline-danger'
-                  onClick={() => handleDeleteButton(item?._id)}>Delete</Button>
+                  onClick={() => {
+                    handleDeleteButton(item?._id)
+                  }}>Delete</Button>
               </ButtonGroup>
             </td>
           </tr>
@@ -70,50 +62,42 @@ const Admin = () => {
       .value()
   )
 
-  // async handlers:
   const handleDeleteButton = async (id) => {
     try {
-      await Promise.all(
-        deleteLog(id),
-        refreshItems()
-      )
+      const freshItems = await deleteLog(id)
+      setItems(freshItems)
     }
     catch (err) {
       console.error(err)
     }
   }
 
-  const handleCreateSubmit = async (e) => {
-    e.preventDefault()
+  const handleCreateSubmit = async (prompt, answer) => {
     try {
-      await Promise.all(
-        createLog(prompt, answer),
-        refreshItems()
-      )
-      setPrompt('')
-      setAnswer('')
+      const freshItems = await createLog(prompt, answer)
+      setItems(freshItems)
+    }
+    catch (err) {
+      console.error(err)
+    }
+    finally {
       setActiveTab('database')
     }
+  }
+
+  const handleUpdateSubmit = async (newPrompt, newAnswer) => {
+    try {
+      const freshItems = await updateLog(selectedLog.id, newPrompt, newAnswer)
+      setItems(freshItems)
+    }
     catch (err) {
       console.error(err)
     }
-  }
-
-  const handleUpdateSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      Promise.all(
-        updateLog(selectedLog.id, prompt, answer),
-        refreshItems()
-      )
+    finally {
       setActiveTab('database')
     }
-    catch (err) {
-      console.error(err)
-    }
   }
 
-  // other handlers:
   const handleUpdateButton = (selectedId, selectedPrompt, selectedAnswer) => {
     setSelectedLog({
       id: selectedId,

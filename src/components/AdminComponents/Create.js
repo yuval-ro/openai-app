@@ -5,20 +5,24 @@ const Create = ({ handleCreateSubmit }) => {
   const [prompt, setPrompt] = useState('');
   const [answer, setAnswer] = useState('');
 
+  const onButtonClick = async () => {
+    await handleCreateSubmit(prompt, answer)
+    setPrompt('')
+    setAnswer('')
+  }
+
   return (
     <Row className='mt-2'>
-      <Form
-        className=''
-        onSubmit={handleCreateSubmit}>
+      <Form>
         <Form.Control
-          className='my-1'
+          className='mb-1'
           value={prompt}
           type='text'
           placeholder='Prompt'
           onChange={e => setPrompt(e?.target?.value)}
           required />
         <Form.Control
-          className='my-1'
+          className='mb-1'
           value={answer}
           type='text'
           placeholder='Answer'
@@ -27,7 +31,7 @@ const Create = ({ handleCreateSubmit }) => {
         <Button
           className='my-1'
           variant='primary'
-          type='submit'>Create</Button>
+          onClick={onButtonClick}>Create</Button>
       </Form>
     </Row>
   )

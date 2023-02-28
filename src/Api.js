@@ -1,24 +1,24 @@
 import axios from 'axios'
 
 const onSuccess = (action) => {
-  console.log(`${action} succeeded`)
+  console.log(`${action} SUCCESSED`)
 }
 
 const onFail = (action, err) => {
-  console.log(`${action} failed`)
+  console.log(`${action} FAILED`)
   console.error(err)
 }
 
-const sendMessage = async (message) => {
-  const action = '@Api.js: sending message to davinci'
+const promptDavinci = async (prompt) => {
+  const action = '@Api.js: sending prompt to davinci then recieving answer'
   try {
     const res = await axios({
       method: 'post',
       url: 'http://localhost:3001/api/davinci',
-      data: { message }
+      data: { prompt }
     })
     onSuccess(action)
-    return res?.data?.message
+    return res?.data?.answer
   }
   catch (err) {
     onFail(action, err)
@@ -45,9 +45,9 @@ const authLogin = async (user, pass) => {
 }
 
 const createLog = async (prompt, answer) => {
-  const action = '@Api.js: creating log'
+  const action = '@Api.js: creating log and adding to database'
   try {
-    await axios({
+    const res = await axios({
       method: 'post',
       url: 'http://localhost:3001/api/create',
       data: {
@@ -56,21 +56,21 @@ const createLog = async (prompt, answer) => {
       }
     })
     onSuccess(action)
+    return res?.data?.docs
   }
   catch (err) {
     onFail(action, err)
   }
 }
 
-const readAll = async () => {
-  const action = '@Api.js: fetching all logs'
+const readLogs = async () => {
+  const action = '@Api.js: reading all logs'
   try {
     const res = await axios({
       method: 'post',
       url: 'http://localhost:3001/api/read'
     })
     onSuccess(action)
-    console.log(res?.data?.docs)
     return res?.data?.docs
   }
   catch (err) {
@@ -81,7 +81,7 @@ const readAll = async () => {
 const updateLog = async (id, prompt, answer) => {
   const action = '@Api.js: patching log'
   try {
-    await axios({
+    const res = await axios({
       method: 'patch',
       url: 'http://localhost:3001/api/update',
       data: {
@@ -91,6 +91,7 @@ const updateLog = async (id, prompt, answer) => {
       }
     })
     onSuccess(action)
+    return res?.data?.docs
   }
   catch (err) {
     onFail(action, err)
@@ -100,12 +101,13 @@ const updateLog = async (id, prompt, answer) => {
 const deleteLog = async (id) => {
   const action = '@Api.js: deleting log'
   try {
-    await axios({
+    const res = await axios({
       method: 'delete',
       url: 'http://localhost:3001/api/delete',
       data: { id }
     })
     onSuccess(action)
+    return res?.data?.docs
   }
   catch (err) {
     onFail(action, err)
@@ -113,10 +115,10 @@ const deleteLog = async (id) => {
 }
 
 export {
-  sendMessage,
+  promptDavinci,
   authLogin,
   createLog,
-  readAll,
+  readLogs,
   updateLog,
   deleteLog
 }

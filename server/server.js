@@ -10,12 +10,12 @@ app.use(express.json())
 app.use(cors())
 app.listen(3001)
 
-app.post('/api/davinci', (req, res) => {
-  const prompt = req.body.message;
+app.post('/api/davinci', async (req, res) => {
+  const prompt = req.body.prompt;
   try {
-    const answer = davinciConnector.promptDavinci(prompt, tokens)
-    mongoConnector.logToDb(prompt, answer)
-    res.json({ message: answer })
+    const answer = await davinciConnector.promptDavinci(prompt, tokens)
+    await mongoConnector.addOne(prompt, answer)
+    res.json({ answer: answer })
   }
   catch (err) {
     console.error(err)
@@ -33,10 +33,12 @@ app.post('/api/auth', (req, res) => {
   }
 })
 
-app.post('/api/create', (req, res) => {
+app.post('/api/create', async (req, res) => {
   const { prompt, answer } = req.body;
   try {
-    mongoConnector.logToDb(prompt, answer)
+    await mongoConnector.addOne(prompt, answer)
+    const docs = await mongoConnector.fetchAll()
+    res.json({ docs })
   }
   catch (err) {
     console.error(err)
@@ -46,7 +48,7 @@ app.post('/api/create', (req, res) => {
 
 app.post('/api/read', async (req, res) => {
   try {
-    const docs = await mongoConnector.getDocs()
+    const docs = await mongoConnector.fetchAll()
     res.json({ docs })
   }
   catch (err) {
@@ -55,10 +57,12 @@ app.post('/api/read', async (req, res) => {
   }
 })
 
-app.patch('/api/update', (req, res) => {
+app.patch('/api/update', async (req, res) => {
   const { id, prompt, answer } = req.body
   try {
-    mongoConnector.updateDocById(id, prompt, answer)
+    await mongoConnector.updateOne(id, prompt, answer)
+    const docs = await mongoConnector.fetchAll()
+    res.json({ docs })
   }
   catch (err) {
     console.error(err)
@@ -66,10 +70,12 @@ app.patch('/api/update', (req, res) => {
   }
 })
 
-app.delete('/api/delete', (req, res) => {
+app.delete('/api/delete', async (req, res) => {
   const { id } = req?.body;
   try {
-    mongoConnector.deleteDocById(id)
+    await mongoConnector.deleteOne(id)
+    const docs = await mongoConnector.fetchAll()
+    res.json({ docs })
   }
   catch (err) {
     console.error(err)
