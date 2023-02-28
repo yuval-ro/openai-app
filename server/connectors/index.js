@@ -1,4 +1,4 @@
-const davinciConnector = require('./davinciConnector');
-const mongoConnector = require('./mongoConnector');
+const davinciConnector = require('./davinciConnector')
+const mongoConnector = require('./mongoConnector')
 
-module.exports = { davinciConnector, mongoConnector };
+module.exports = { davinciConnector, mongoConnector }

@@ -1,6 +1,7 @@
 const cors = require('cors')
 const moment = require('moment')
 const { mongoose, Schema } = require('mongoose')
+
 const { connString, dbName, collName, logSchemaBody } = require('./consts')
 const logSchema = new Schema(logSchemaBody, { collection: collName })
 const LogModel = mongoose.model('LogModel', logSchema)

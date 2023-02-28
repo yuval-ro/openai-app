@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { promptDavinci } from '../../api';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button, ButtonGroup } from 'react-bootstrap';
 
-const MessageForm = ({ updateConverse, clearConversation }) => {
+const PromptForm = ({ updateConv, clearConv, deleteConv }) => {
   const [currentPrompt, setCurrentPrompt] = useState('')
 
-  const handleSubmit = async (e) => {
+  const handlePromptSubmit = async (e) => {
     e.preventDefault()
     try {
       const res = await promptDavinci(currentPrompt)
-      updateConverse({
+      updateConv({
         prompt: currentPrompt,
         answer: res
       })
@@ -25,7 +25,7 @@ const MessageForm = ({ updateConverse, clearConversation }) => {
       <Col className='d-flex my-1 px-0'>
         <Form
           className='d-flex col-9'
-          onSubmit={handleSubmit}>
+          onSubmit={handlePromptSubmit}>
           <Form.Control className=''
             value={currentPrompt}
             type='text'
@@ -37,13 +37,17 @@ const MessageForm = ({ updateConverse, clearConversation }) => {
             variant='primary'
             type='submit'>Submit</Button>
         </Form>
-        <Button
-          className='ms-auto'
-          variant='outline-danger'
-          onClick={() => { clearConversation() }}>Clear</Button>
+        <ButtonGroup className='ms-auto'>
+          <Button
+            variant='outline-warning'
+            onClick={() => { clearConv() }}>Clear</Button>
+          <Button
+            variant='outline-danger'
+            onClick={() => { deleteConv() }}>Delete</Button>
+        </ButtonGroup>
       </Col>
     </Row>
   )
 }
 
-export default MessageForm
+export default PromptForm

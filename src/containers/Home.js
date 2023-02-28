@@ -1,35 +1,40 @@
 import React, { useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import MessageForm from '../components/HomeComponents/MessageForm'
-import ConverseRow from '../components/HomeComponents/ConverseRow'
+import PromptForm from '../components/HomeComponents/PromptForm'
+import ConvRow from '../components/HomeComponents/ConvRow'
 import { map } from 'lodash'
 
 const Home = () => {
-  const [conversation, setConversation] = useState(() => {
-    const history = localStorage.getItem('conversation');
-    const initialValue = JSON.parse(history);
-    return initialValue || [];
+  const [conv, setConv] = useState(() => {
+    const history = localStorage.getItem('conv')
+    const init = JSON.parse(history)
+    return init || []
   })
 
-  const updateConverse = (newConverse) => {
-    let oldConverse = conversation
-    oldConverse.push(newConverse)
-    setConversation([...oldConverse])
+  const updateConv = (updatedConv) => {
+    let oldConv = conv
+    oldConv.push(updatedConv)
+    setConv([...oldConv])
     localStorage.setItem(
-      'conversation',
-      JSON.stringify(conversation)
+      'conv',
+      JSON.stringify(conv)
     )
   }
 
-  const clearConversation = () => {
-    setConversation([])
+  const clearConv = () => {
+    setConv([])
   }
 
-  const renderConversation = () => (
-    map(conversation, (item, index) => {
+  const deleteConv = () => {
+    setConv([])
+    localStorage.clear()
+  }
+
+  const renderConv = () => (
+    map(conv, (item, index) => {
       const { prompt, answer } = item
       return (
-        <ConverseRow key={index.toString()} prompt={prompt} answer={answer} />
+        <ConvRow key={index.toString()} prompt={prompt} answer={answer} />
       )
     })
   )
@@ -43,12 +48,13 @@ const Home = () => {
         <Col
           className='overflow-auto border border-2 rounded-3 my-1'
           style={{ 'minHeight': '550px' }}>
-          {renderConversation()}
+          {renderConv()}
         </Col>
       </Row>
-      <MessageForm
-        updateConverse={updateConverse}
-        clearConversation={clearConversation} />
+      <PromptForm
+        updateConv={updateConv}
+        clearConv={clearConv}
+        deleteConv={deleteConv} />
     </Container>
   )
 }
