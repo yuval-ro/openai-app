@@ -5,35 +5,40 @@ import ConverseRow from '../components/HomeComponents/ConverseRow'
 import { map } from 'lodash'
 
 const Home = () => {
-  const [converse, setConverse] = useState([]);
+  const [conversation, setConversation] = useState(() => {
+    const history = localStorage.getItem('conversation');
+    const initialValue = JSON.parse(history);
+    return initialValue || [];
+  })
 
   const updateConverse = (newConverse) => {
-    let oldConverse = converse
+    let oldConverse = conversation
     oldConverse.push(newConverse)
-    setConverse([...oldConverse])
-  }
-
-  const clearConversation = () => {
-    setConverse([])
-  }
-
-  const renderConversation = () => {
-    return (
-      map(converse, (c) => {
-        const { prompt, answer } = c
-        return (
-          <ConverseRow prompt={prompt} answer={answer} />
-        )
-      })
+    setConversation([...oldConverse])
+    localStorage.setItem(
+      'conversation',
+      JSON.stringify(conversation)
     )
   }
 
-  return (
-    <Container className='container-fluid'>
-      <Row>
-        <Col className='fs-1 my-1 px-0'> Chat with Davinci </Col>
-      </Row>
+  const clearConversation = () => {
+    setConversation([])
+  }
 
+  const renderConversation = () => (
+    map(conversation, (item, index) => {
+      const { prompt, answer } = item
+      return (
+        <ConverseRow key={index.toString()} prompt={prompt} answer={answer} />
+      )
+    })
+  )
+
+  return (
+    <Container variant='container-fluid'>
+      <Row>
+        <Col className='fs-1 my-1 px-0'>Chat with Davinci</Col>
+      </Row>
       <Row>
         <Col
           className='overflow-auto border border-2 rounded-3 my-1'
@@ -41,7 +46,6 @@ const Home = () => {
           {renderConversation()}
         </Col>
       </Row>
-
       <MessageForm
         updateConverse={updateConverse}
         clearConversation={clearConversation} />

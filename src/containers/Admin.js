@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, Button, ButtonGroup, Tabs, Tab } from 'react-bootstrap'
 import { chain } from 'lodash'
 import moment from 'moment'
+
 import { readLogs, deleteLog, createLog, updateLog, deleteAllLogs } from '../api'
 import Items from '../components/AdminComponents/Items'
 import Create from '../components/AdminComponents/Create'
@@ -27,38 +28,40 @@ const Admin = () => {
     init()
   }, [])
 
-  const renderTableRows = (items, filterBy = '') => (
-    chain(items)
-      .filter((item) => {
-        // if substring return true:
-        return (item?.prompt?.includes(filterBy) || item?.answer?.includes(filterBy));
-      })
-      .map((item, index) => {
-        return (
-          <tr id={index} style={{ 'verticalAlign': 'middle' }}>
-            <td style={{ "fontWeight": "bold" }}>{(index + 1)}</td>
-            <td>"{item?.prompt}"</td>
-            <td>"{item?.answer}"</td>
-            <td>{moment(item?.date).format('HH:mm:ss @ DD/MM/YYYY')}</td>
-            <td>
-              <ButtonGroup>
-                <Button
-                  variant='outline-warning'
-                  onClick={() => {
-                    handleUpdateButton(item?._id, item?.prompt, item?.answer)
-                  }}>Update</Button>
-                <Button
-                  variant='outline-danger'
-                  onClick={() => {
-                    handleDeleteButton(item?._id)
-                  }}>Delete</Button>
-              </ButtonGroup>
-            </td>
-          </tr>
-        )
-      })
-      .value()
-  )
+  const renderTableRows = (items, filterBy = '') => {
+    return (
+      chain(items)
+        .filter(item => {
+          // if substring return true:
+          return (item?.prompt?.includes(filterBy) || item?.answer?.includes(filterBy))
+        })
+        .map((item, index) => {
+          return (
+            <tr key={index.toString()} id={index} style={{ 'verticalAlign': 'middle' }}>
+              <td style={{ "fontWeight": "bold" }}>{(index + 1)}</td>
+              <td>"{item?.prompt}"</td>
+              <td>"{item?.answer}"</td>
+              <td>{moment(item?.date).format('HH:mm:ss @ DD/MM/YYYY')}</td>
+              <td>
+                <ButtonGroup>
+                  <Button
+                    variant='outline-warning'
+                    onClick={() => {
+                      handleUpdateButton(item?._id, item?.prompt, item?.answer)
+                    }}>Update</Button>
+                  <Button
+                    variant='outline-danger'
+                    onClick={() => {
+                      handleDeleteButton(item?._id)
+                    }}>Delete</Button>
+                </ButtonGroup>
+              </td>
+            </tr>
+          )
+        })
+        .value()
+    )
+  }
 
   const handleDeleteAllButton = async () => {
     try {
