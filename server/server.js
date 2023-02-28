@@ -1,10 +1,9 @@
-const dotenv = require('dotenv').config({ path: './config/.env' })
+require('dotenv').config({ path: './config/.env' })
 const { davinciConnector, mongoConnector } = require('./connectors')
 const express = require('express')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const app = express()
-const tokens = 10
 
 app.use(express.json())
 app.use(cors())
@@ -13,7 +12,7 @@ app.listen(3001)
 app.post('/api/davinci', async (req, res) => {
   const prompt = req.body.prompt;
   try {
-    const answer = await davinciConnector.promptDavinci(prompt, tokens)
+    const answer = await davinciConnector.promptDavinci(prompt)
     await mongoConnector.addOne(prompt, answer)
     res.json({ answer: answer })
   }
@@ -74,6 +73,18 @@ app.delete('/api/delete', async (req, res) => {
   const { id } = req?.body;
   try {
     await mongoConnector.deleteOne(id)
+    const docs = await mongoConnector.fetchAll()
+    res.json({ docs })
+  }
+  catch (err) {
+    console.error(err)
+    res.status(500).end()
+  }
+})
+
+app.delete('/api/deleteall', async (req, res) => {
+  try {
+    await mongoConnector.deleteAll()
     const docs = await mongoConnector.fetchAll()
     res.json({ docs })
   }

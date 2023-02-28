@@ -114,11 +114,27 @@ const deleteLog = async (id) => {
   }
 }
 
+const deleteAllLogs = async () => {
+  const action = '@Api.js: deleting all logs from database'
+  try {
+    const res = await axios({
+      method: 'delete',
+      url: 'http://localhost:3001/api/deleteall'
+    })
+    onSuccess(action)
+    return res?.data?.docs
+  }
+  catch (err) {
+    onFail(action, err)
+  }
+}
+
 export {
   promptDavinci,
   authLogin,
   createLog,
   readLogs,
   updateLog,
-  deleteLog
+  deleteLog,
+  deleteAllLogs
 }

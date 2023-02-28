@@ -93,6 +93,19 @@ const deleteOne = async (id) => {
   }
 }
 
+const deleteAll = async () => {
+  const action = 'deleting all documents'
+  try {
+    await connect()
+    await LogModel.deleteMany({})
+    onSuccess(action)
+  }
+  catch (err) {
+    onFail(action, 'connection issue', err)
+    throw err
+  }
+}
+
 const updateOne = async (id, prompt, answer) => {
   const action = `patching documnet ${id}`
   if (! await exists(id)) {
@@ -113,4 +126,4 @@ const updateOne = async (id, prompt, answer) => {
   }
 }
 
-module.exports = { addOne, fetchAll, deleteOne, updateOne }
+module.exports = { addOne, fetchAll, deleteOne, deleteAll, updateOne }
