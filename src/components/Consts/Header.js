@@ -16,7 +16,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <Container className='container-fluid border-bottom border-2'>
       <Row className='py-2'>
-        <Col className='d-flex ps-0 pe-0'>
+        <Col className='d-flex'>
           <Link className='ms-0' to='/'>
             <Button variant='outline-primary'>Home</Button>
           </Link>

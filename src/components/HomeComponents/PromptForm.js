@@ -22,18 +22,17 @@ const PromptForm = ({ updateConv, clearConv, deleteConv }) => {
 
   return (
     <Row>
-      <Col className='d-flex my-1 px-0'>
+      <Col className='d-flex my-2 me-1 ps-1 align-items-center'>
         <Form
           className='d-flex col-9'
           onSubmit={handlePromptSubmit}>
           <Form.Control className=''
             value={currentPrompt}
             type='text'
-            placeholder='Ask me anything...'
+            placeholder='Ask Davinci something...'
             onChange={e => setCurrentPrompt(e?.target?.value)}
             required />
           <Button
-            className='mx-1'
             variant='primary'
             type='submit'>Submit</Button>
         </Form>

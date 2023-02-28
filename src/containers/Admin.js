@@ -15,7 +15,6 @@ const Admin = () => {
   const [activeTab, setActiveTab] = useState('database')
 
   useEffect(() => {
-    console.log(`@${moment(Date.now()).format('HH:mm:ss.ms')}: useEffect called`)
     const init = async () => {
       try {
         const freshItems = await readLogs()
@@ -32,8 +31,7 @@ const Admin = () => {
     return (
       chain(items)
         .filter(item => {
-          // if substring return true:
-          return (item?.prompt?.includes(filterBy) || item?.answer?.includes(filterBy))
+          return (item?.prompt?.includes(filterBy) || item?.answer?.includes(filterBy)) // if substring
         })
         .map((item, index) => {
           return (
@@ -119,11 +117,10 @@ const Admin = () => {
   }
 
   return (
-    <Container className='container-fluid px-0'>
+    <Container variant='fluid'>
       <Tabs
         activeKey={activeTab}
-        onSelect={tab => setActiveTab(tab)}
-        className=''>
+        onSelect={tab => setActiveTab(tab)}>
         <Tab eventKey='database' title='Database Logs'>
           <Items
             handleDeleteAllButton={handleDeleteAllButton}

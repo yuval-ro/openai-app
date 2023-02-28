@@ -9,13 +9,17 @@ const openai = new OpenAIApi(config)
 
 const promptDavinci = async (prompt) => {
   try {
-    const res = await openai.createCompletion({
+    let res = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt: prompt,
       max_tokens: 20,
       temperature: 0.9
     })
-    return res.data.choices[0].text.trim() + '...'
+    res = res.data.choices[0].text.replace(/\s+/g, ' ').trim() // trim unnecessary crap like \n and \t
+    if (!res.endsWith('.')) {
+      res += '...'
+    }
+    return res
   }
   catch (err) {
     console.error(err)

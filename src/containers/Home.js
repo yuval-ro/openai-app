@@ -40,13 +40,13 @@ const Home = () => {
   )
 
   return (
-    <Container variant='container-fluid'>
+    <Container variant='fluid'>
       <Row>
-        <Col className='fs-1 my-1 px-0'>Chat with Davinci</Col>
+        <Col className='fs-2'>Chat with Davinci</Col>
       </Row>
       <Row>
         <Col
-          className='overflow-auto border border-2 rounded-3 my-1'
+          className='overflow-auto border border-2 rounded-3'
           style={{ 'minHeight': '550px' }}>
           {renderConv()}
         </Col>
