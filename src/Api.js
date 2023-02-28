@@ -22,6 +22,7 @@ const promptDavinci = async (prompt) => {
   }
   catch (err) {
     onFail(action, err)
+    throw err
   }
 }
 
@@ -41,6 +42,7 @@ const authLogin = async (user, pass) => {
   }
   catch (err) {
     onFail(action, err)
+    throw err
   }
 }
 
@@ -60,6 +62,7 @@ const createLog = async (prompt, answer) => {
   }
   catch (err) {
     onFail(action, err)
+    throw err
   }
 }
 
@@ -75,6 +78,7 @@ const readLogs = async () => {
   }
   catch (err) {
     onFail(action, err)
+    throw err
   }
 }
 
@@ -95,6 +99,7 @@ const updateLog = async (id, prompt, answer) => {
   }
   catch (err) {
     onFail(action, err)
+    throw err
   }
 }
 
@@ -111,6 +116,7 @@ const deleteLog = async (id) => {
   }
   catch (err) {
     onFail(action, err)
+    throw err
   }
 }
 
@@ -126,6 +132,7 @@ const deleteAllLogs = async () => {
   }
   catch (err) {
     onFail(action, err)
+    throw err
   }
 }
 

@@ -1,81 +1,72 @@
 import React, { useState } from 'react'
 import { authLogin } from '../../api'
-import { Row, Col, Form, Button } from 'react-bootstrap'
-import Toast from 'react-bootstrap/Toast'
+import { Row, Col, Form, Button, Alert, Fade } from 'react-bootstrap'
 import { useSignIn } from 'react-auth-kit'
 import { useNavigate } from 'react-router-dom'
 
 const LoginForm = ({ onSuccessfulLogin }) => {
   const [user, setUser] = useState('')
   const [pass, setPass] = useState('')
-  const [loginToast, setLoginToast] = useState(false)
+  const [loginAlert, setLoginAlert] = useState(false)
   const signIn = useSignIn()
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    authLogin(user, pass)
-      .then((response) => {
-        signIn({
-          token: response,
-          expiresIn: 5, // minutes
-          tokenType: 'Bearer',
-        });
-        navigate('/admin'); // redirect after successfull login
-        onSuccessfulLogin()
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await authLogin(user, pass)
+      signIn({
+        token: res,
+        expiresIn: 5, // minutes
+        tokenType: 'Bearer',
       })
-      .catch((err) => {
-        console.error(err)
-        setLoginToast(true)
-      })
-      .finally(() => {
-        setUser('')
-        setPass('')
-      });
-  };
-
-  const onUserChange = (e) => {
-    setUser(e?.target?.value)
-  }
-  const onPassChange = (e) => {
-    setPass(e?.target?.value)
+      navigate('/admin'); // redirect after successfull login
+      onSuccessfulLogin()
+    }
+    catch (err) {
+      console.error(err)
+      setLoginAlert(true)
+    }
+    finally {
+      setUser('')
+      setPass('')
+    }
   }
 
   return (
     <React.Fragment>
-      <Toast onClose={() => setLoginToast(false)} show={loginToast}>
-        <Toast.Header>
-          <strong className="me-auto"></strong>
-        </Toast.Header>
-        <Toast.Body>
-          Login credentials are incorrect.
-        </Toast.Body>
-      </Toast>
       <Row>
-        <Col className='d-flex flex-col my-1 px-0'>
-          <Form
-            className='w-50'
-            onSubmit={handleSubmit}
-          >
+        <Col>
+          <Alert
+            onClose={() => setLoginAlert(false)}
+            show={loginAlert}
+            variant='danger'
+            dismissible>
+            Login credentials are incorrect.
+          </Alert>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form onSubmit={handleLoginSubmit}>
             <Form.Control
               className='my-1'
               value={user}
               type='text'
               placeholder='Username'
-              onChange={e => onUserChange(e)}
-            />
+              onChange={e => setUser(e?.target?.value)}
+              required />
             <Form.Control
               className='my-1'
               value={pass}
               type='password'
               placeholder='Password'
-              onChange={e => onPassChange(e)}
-            />
+              onChange={e => setPass(e?.target?.value)}
+              required />
             <Button
               className='my-1'
               variant='primary'
-              type='submit'
-            >Login</Button>
+              type='submit'>Login</Button>
           </Form>
         </Col>
       </Row>

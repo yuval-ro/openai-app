@@ -9,9 +9,9 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   }
 
   return (
-    <Container className='container-fluid'>
+    <Container className='container-fluid px-0'>
       <Row>
-        < Col className='fs-1 my-1 px-0' >
+        < Col className='fs-1 my-1' >
           Administrator Login
         </Col >
       </Row >
