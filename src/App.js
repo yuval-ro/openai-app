@@ -17,39 +17,14 @@ const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Header
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
-        />
+        <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <Routes>
-          <Route
-            path='/'
-            element={<Home />}
-          />
-          <Route
-            path='/login'
-            element={<Login
-              isLoggedIn={isLoggedIn}
-              setIsLoggedIn={setIsLoggedIn} />}
-          />
-          <Route
-            path='/about'
-            element={<About />}
-          />
-          <Route
-            path='/admin'
-            element={
-              <RequireAuth loginPath={'/login'}>
-                <Admin />
-              </RequireAuth>} />
-          <Route
-            path='/404'
-            element={<NotFound />}
-          />
-          <Route
-            path='/*'
-            element={<Navigate to='/404' />}
-          />
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/admin' element={<RequireAuth loginPath={'/login'}><Admin /></RequireAuth>} />
+          <Route path='/404' element={<NotFound />} />
+          <Route path='/*' element={<Navigate to='/404' />} />
         </Routes>
         <Footer />
       </BrowserRouter>

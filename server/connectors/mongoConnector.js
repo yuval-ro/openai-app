@@ -1,9 +1,9 @@
-const e = require('cors')
+const cors = require('cors')
+const moment = require('moment')
 const { mongoose, Schema } = require('mongoose')
 const { connString, dbName, collName, logSchemaBody } = require('./consts')
 const logSchema = new Schema(logSchemaBody, { collection: collName })
 const LogModel = mongoose.model('LogModel', logSchema)
-mongoose.set('strictQuery', true)
 const options = {
   autoIndex: false, // Don't build indexes
   maxPoolSize: 10, // Maintain up to 10 socket connections
@@ -11,6 +11,7 @@ const options = {
   socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
   family: 4 // Use IPv4, skip trying IPv6
 }
+mongoose.set('strictQuery', true)
 let isConnected = false
 
 const exists = async (id) => {
@@ -18,12 +19,11 @@ const exists = async (id) => {
 }
 
 const onSuccess = (action) => {
-  console.log(`${action} SUCCEEDED`)
+  console.log(`@${moment(Date.now()).format('HH:mm:ss.ms')}: ${action} SUCCEEDED`)
 }
 
 const onFail = (action, reason, err = null) => {
-  isConnected = false
-  console.log(`${action} FAILED: ${reason}`)
+  console.log(`@${moment(Date.now()).format('HH:mm:ss.ms')}: ${action} FAILED: ${reason}`)
   if (err != null) {
     console.error(err)
   }
@@ -35,7 +35,7 @@ const connect = async () => {
     if (!isConnected) {
       await mongoose.connect(`${connString}/${dbName}`, options)
       isConnected = true
-      // onSuccess(action) // too much messages will be printed
+      onSuccess(action) // too much messages will be printed
     }
   }
   catch (err) {
@@ -45,7 +45,7 @@ const connect = async () => {
 }
 
 const addOne = async (prompt, answer) => {
-  const action = `saving document {${prompt}, ${answer}}`
+  const action = `saving document {"${prompt}", "${answer}"}`
   try {
     await connect()
     const doc = new LogModel({
@@ -76,7 +76,7 @@ const fetchAll = async () => {
 }
 
 const deleteOne = async (id) => {
-  const action = `deleting document ${id}`
+  const action = `deleting document "${id}"`
   if (! await exists(id)) {
     onFail(action, 'does not exist')
   }

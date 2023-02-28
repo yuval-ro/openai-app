@@ -37,7 +37,7 @@ const Home = () => {
       <Row>
         <Col
           className='overflow-auto border border-2 rounded-3 my-1'
-          style={{ 'min-height': '400px', 'max-height': '400px' }}>
+          style={{ 'minHeight': '550px' }}>
           {renderConversation()}
         </Col>
       </Row>

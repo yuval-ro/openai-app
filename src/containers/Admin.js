@@ -14,7 +14,7 @@ const Admin = () => {
   const [activeTab, setActiveTab] = useState('database')
 
   useEffect(() => {
-    console.log('useEffect called!')
+    console.log(`@${moment(Date.now()).format('HH:mm:ss.ms')}: useEffect called`)
     const init = async () => {
       try {
         const freshItems = await readLogs()
@@ -35,20 +35,19 @@ const Admin = () => {
       })
       .map((item, index) => {
         return (
-          <tr id={index} style={{ 'vertical-align': 'middle' }}>
-            <td style={{ "font-weight": "bold" }}>{(index + 1)}</td>
+          <tr id={index} style={{ 'verticalAlign': 'middle' }}>
+            <td style={{ "fontWeight": "bold" }}>{(index + 1)}</td>
             <td>"{item?.prompt}"</td>
             <td>"{item?.answer}"</td>
             <td>{moment(item?.date).format('HH:mm:ss @ DD/MM/YYYY')}</td>
             <td>
               <ButtonGroup>
-                <Button classname=''
-                  eventKey='update'
+                <Button
                   variant='outline-warning'
                   onClick={() => {
                     handleUpdateButton(item?._id, item?.prompt, item?.answer)
                   }}>Update</Button>
-                <Button classname=''
+                <Button
                   variant='outline-danger'
                   onClick={() => {
                     handleDeleteButton(item?._id)

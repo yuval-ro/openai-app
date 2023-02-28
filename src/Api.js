@@ -1,16 +1,17 @@
 import axios from 'axios'
+import moment from 'moment'
 
 const onSuccess = (action) => {
-  console.log(`${action} SUCCESSED`)
+  console.log(`@${moment(Date.now()).format('HH:mm:ss.ms')}: ${action} SUCCESSED`)
 }
 
 const onFail = (action, err) => {
-  console.log(`${action} FAILED`)
+  console.log(`@${moment(Date.now()).format('HH:mm:ss.ms')}: ${action} FAILED`)
   console.error(err)
 }
 
 const promptDavinci = async (prompt) => {
-  const action = '@Api.js: sending prompt to davinci then recieving answer'
+  const action = 'prompting davinci for an answer'
   try {
     const res = await axios({
       method: 'post',
@@ -27,7 +28,7 @@ const promptDavinci = async (prompt) => {
 }
 
 const authLogin = async (user, pass) => {
-  const action = '@Api.js: admin authorization'
+  const action = 'authorizing login'
   try {
     const res = await axios({
       method: 'post',
@@ -47,7 +48,7 @@ const authLogin = async (user, pass) => {
 }
 
 const createLog = async (prompt, answer) => {
-  const action = '@Api.js: creating log and adding to database'
+  const action = 'adding log to database'
   try {
     const res = await axios({
       method: 'post',
@@ -67,7 +68,7 @@ const createLog = async (prompt, answer) => {
 }
 
 const readLogs = async () => {
-  const action = '@Api.js: reading all logs'
+  const action = 'fetching all logs'
   try {
     const res = await axios({
       method: 'post',
@@ -83,7 +84,7 @@ const readLogs = async () => {
 }
 
 const updateLog = async (id, prompt, answer) => {
-  const action = '@Api.js: patching log'
+  const action = 'updating a log'
   try {
     const res = await axios({
       method: 'patch',
@@ -104,7 +105,7 @@ const updateLog = async (id, prompt, answer) => {
 }
 
 const deleteLog = async (id) => {
-  const action = '@Api.js: deleting log'
+  const action = 'deleting a log'
   try {
     const res = await axios({
       method: 'delete',
@@ -121,7 +122,7 @@ const deleteLog = async (id) => {
 }
 
 const deleteAllLogs = async () => {
-  const action = '@Api.js: deleting all logs from database'
+  const action = 'deleting all logs'
   try {
     const res = await axios({
       method: 'delete',

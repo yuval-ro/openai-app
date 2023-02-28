@@ -1,13 +1,18 @@
-require('dotenv').config({ path: './config/.env' })
-const { davinciConnector, mongoConnector } = require('./connectors')
 const express = require('express')
 const cors = require('cors')
+const moment = require('moment')
 const jwt = require('jsonwebtoken')
-const app = express()
 
+const dotenv = require('dotenv').config({ path: './config/.env' })
+const { davinciConnector, mongoConnector } = require('./connectors')
+
+const app = express()
+const port = 3001
 app.use(express.json())
 app.use(cors())
-app.listen(3001)
+app.listen(port, () => {
+  console.log(`@${moment(Date.now()).format('HH:mm:ss.ms')}: server listening on port ${port}`)
+})
 
 app.post('/api/davinci', async (req, res) => {
   const prompt = req.body.prompt;
