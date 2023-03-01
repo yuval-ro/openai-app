@@ -10,7 +10,7 @@ const About = () => (
       <Col>
         <p>
           This is our project for the course;<br />
-          The entire source code and is original, as well as the design!
+          The entire source code is original as well as the design!
         </p>
         <p>
           This project consists of the React app as the front-end,

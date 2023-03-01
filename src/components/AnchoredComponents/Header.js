@@ -14,8 +14,12 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   }
 
   return (
-    <Container className='container-fluid border-bottom border-2'>
-      <Row className='py-2'>
+    <Container
+      variant='fluid'
+      style={{
+        'backgroundColor': '#f6f6f6'
+      }}>
+      <Row>
         <Col className='d-flex'>
           <Link className='ms-0' to='/'>
             <Button variant='outline-primary'>Home</Button>

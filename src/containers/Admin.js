@@ -27,6 +27,13 @@ const Admin = () => {
     init()
   }, [])
 
+  const concatStr = (string, len = 45) => {
+    if (string.length > len) {
+      return `'${string.substring(0, len)}..`
+    }
+    return `'${string}'`
+  }
+
   const renderTableRows = (items, filterBy = '') => {
     return (
       chain(items)
@@ -35,11 +42,11 @@ const Admin = () => {
         })
         .map((item, index) => {
           return (
-            <tr key={index.toString()} id={index} style={{ 'verticalAlign': 'middle' }}>
+            <tr key={index.toString()} id={index} style={{ 'verticalAlign': 'top' }}>
               <td style={{ "fontWeight": "bold" }}>{(index + 1)}</td>
-              <td>"{item?.prompt}"</td>
-              <td>"{item?.answer}"</td>
-              <td>{moment(item?.date).format('HH:mm:ss @ DD/MM/YYYY')}</td>
+              <td style={{ 'fontFamily': 'consolas' }}>{concatStr(item?.prompt)}</td>
+              <td style={{ 'fontFamily': 'consolas' }}>{concatStr(item?.answer)}</td>
+              <td>{moment(item?.date).format('HH:mm:ss-DD/MM/YYYY')}</td>
               <td>
                 <ButtonGroup>
                   <Button

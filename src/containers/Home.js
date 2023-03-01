@@ -1,61 +1,31 @@
-import React, { useState } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
-import PromptForm from '../components/HomeComponents/PromptForm'
-import ConvRow from '../components/HomeComponents/ConvRow'
-import { map } from 'lodash'
+import React from 'react'
+import { Col, Container, Row } from 'react-bootstrap'
+import Chat from '../components/HomeComponents/Chat'
+
+import davinci from '../assets/davinci.png'
 
 const Home = () => {
-  const [conv, setConv] = useState(() => {
-    const history = localStorage.getItem('conv')
-    const init = JSON.parse(history)
-    return init || []
-  })
-
-  const updateConv = (updatedConv) => {
-    let oldConv = conv
-    oldConv.push(updatedConv)
-    setConv([...oldConv])
-    localStorage.setItem(
-      'conv',
-      JSON.stringify(conv)
-    )
-  }
-
-  const clearConv = () => {
-    setConv([])
-  }
-
-  const deleteConv = () => {
-    setConv([])
-    localStorage.clear()
-  }
-
-  const renderConv = () => (
-    map(conv, (item, index) => {
-      const { prompt, answer } = item
-      return (
-        <ConvRow key={index.toString()} prompt={prompt} answer={answer} />
-      )
-    })
-  )
-
   return (
-    <Container variant='fluid'>
-      <Row>
-        <Col className='fs-2'>Chat with Davinci</Col>
-      </Row>
-      <Row>
-        <Col
-          className='overflow-auto border border-2 rounded-3'
-          style={{ 'minHeight': '550px' }}>
-          {renderConv()}
+    <Container
+      variant='fluid'
+      style={{
+        'height': '700px'
+      }}>
+      <Row
+        className='align-content-center'
+        style={{
+          'flexDirection': 'column',
+          'backgroundColor': '#f6f6f6'
+        }}>
+        <Col className='d-flex flex-column align-items-center'>
+          <img src={davinci} style={{ 'width': '50px' }} />
+          <p className='mb-0 text-justify font-weight-bold'>Davinci</p>
+        </Col>
+        <Col className='col-1'>
         </Col>
       </Row>
-      <PromptForm
-        updateConv={updateConv}
-        clearConv={clearConv}
-        deleteConv={deleteConv} />
-    </Container>
+      <Chat />
+    </Container >
   )
 }
 
