@@ -2,20 +2,17 @@ import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import LoginForm from '../components/LoginComponents/LoginForm'
 
-const Login = ({ isLoggedIn, setIsLoggedIn }) => {
-
-  const onSuccessfulLogin = () => {
-    setIsLoggedIn(true);
-  }
-
+const Login = ({ setIsLoggedIn }) => {
   return (
-    <Container variant='fluid'>
+    <Container
+      variant='fluid'
+      style={{ 'height': '84%' }}>
       <Row>
         <Col className='fs-2' >
           Administrator Login
         </Col >
       </Row >
-      <LoginForm onSuccessfulLogin={onSuccessfulLogin} />
+      <LoginForm onSuccessfulLogin={setIsLoggedIn(true)} />
     </Container >
   )
 }

@@ -26,8 +26,7 @@ const ChatForm = ({ updateConv, clearConv, deleteConv }) => {
   return (
     <Container
       variant='fluid'
-      className='pt-2'
-      style={{ 'backgroundColor': 'white' }}>
+      style={{ 'height': '15%' }}>
       <Row>
         <Col>
           <Form
@@ -37,7 +36,7 @@ const ChatForm = ({ updateConv, clearConv, deleteConv }) => {
               className='rounded-pill border border-2'
               value={currentPrompt}
               type='text'
-              placeholder='Ask Davinci something...'
+              placeholder='Ask Davinci...'
               onChange={e => setCurrentPrompt(e?.target?.value)}
               required />
             <Button

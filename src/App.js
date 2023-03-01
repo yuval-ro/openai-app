@@ -18,7 +18,6 @@ const App = () => {
   return (
     <Container
       variant='fluid'
-      className='px-0'
       style={{
         'height': '100vh',
         'fontFamily': 'Public Sans',

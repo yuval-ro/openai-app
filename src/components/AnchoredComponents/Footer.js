@@ -7,6 +7,7 @@ const Footer = () => (
     variant='fluid'
     className=''
     style={{
+      'height': '8%',
       'backgroundColor': '#f6f6f6'
     }}>
     <Row className='border-top border-2'>

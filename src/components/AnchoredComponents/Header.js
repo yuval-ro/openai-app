@@ -17,6 +17,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     <Container
       variant='fluid'
       style={{
+        'height': '8%',
         'backgroundColor': '#f6f6f6'
       }}>
       <Row>

@@ -23,7 +23,7 @@ const ChatWindow = ({ conv }) => {
       className='border-top border-2'
       style={{
         'overflowY': 'auto',
-        'height': '80%',
+        'height': '70%',
         'scrollBehavior': 'smooth',
         'backgroundColor': 'white'
       }}>
