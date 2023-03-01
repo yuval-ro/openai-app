@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { authLogin } from '../../api'
 import { Row, Col, Form, Button, Alert, Fade } from 'react-bootstrap'
 import { useSignIn } from 'react-auth-kit'
 import { useNavigate } from 'react-router-dom'
 
-const LoginForm = ({ onSuccessfulLogin }) => {
+import { authLogin } from '../../api'
+
+const LoginForm = ({ setIsLoggedIn }) => {
   const [user, setUser] = useState('')
   const [pass, setPass] = useState('')
   const [loginAlert, setLoginAlert] = useState(false)
@@ -20,8 +21,8 @@ const LoginForm = ({ onSuccessfulLogin }) => {
         expiresIn: 5, // minutes
         tokenType: 'Bearer',
       })
-      navigate('/admin'); // redirect after successfull login
-      onSuccessfulLogin()
+      setIsLoggedIn(true)
+      navigate('/admin') // redirect after successfull login
     }
     catch (err) {
       console.error(err)
@@ -41,9 +42,7 @@ const LoginForm = ({ onSuccessfulLogin }) => {
             onClose={() => setLoginAlert(false)}
             show={loginAlert}
             variant='danger'
-            dismissible>
-            Login credentials are incorrect.
-          </Alert>
+            dismissible>Login credentials are incorrect.</Alert>
         </Col>
       </Row>
       <Row>
