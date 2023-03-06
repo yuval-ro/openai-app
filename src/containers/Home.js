@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import Chat from '../components/HomeComponents/Chat'
 
+import Chat from '../components/HomeComponents/Chat'
 import davinci from '../assets/davinci.png'
 
 const Home = () => {
@@ -18,7 +18,7 @@ const Home = () => {
         }}>
         <Col className='d-flex flex-column align-items-center'>
           <img src={davinci} style={{ 'width': '50px' }} />
-          <p className='mb-0 text-justify font-weight-bold'>Davinci</p>
+          <p className='mb-0 text-justify' style={{ 'fontWeight': '700' }}>Davinci</p>
         </Col>
         <Col className='col-1'>
         </Col>

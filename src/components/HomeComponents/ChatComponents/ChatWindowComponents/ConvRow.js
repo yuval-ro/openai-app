@@ -2,9 +2,6 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import moment from 'moment'
 
-import davinci from '../../../../assets/davinci.png'
-import me from '../../../../assets/me.png'
-
 const ConvRow = ({ prompt, answer, timeStamp }) => (
   <React.Fragment>
     <Row className='justify-content-end my-1'>

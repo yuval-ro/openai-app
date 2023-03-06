@@ -9,7 +9,7 @@ const Login = ({ setIsLoggedIn }) => {
       variant='fluid'
       style={{ 'height': '84%' }}>
       <Row>
-        <Col className='fs-2' >Administrator Login</Col >
+        <Col className='fs-2'> Administrator Login </Col >
       </Row >
       <LoginForm setIsLoggedIn={setIsLoggedIn} />
     </Container >

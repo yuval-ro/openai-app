@@ -2,8 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const moment = require('moment')
 const jwt = require('jsonwebtoken')
-
 const dotenv = require('dotenv').config({ path: './config/.env' })
+
 const { davinciConnector, mongoConnector } = require('./connectors')
 
 const app = express()
@@ -11,11 +11,11 @@ const port = 3001
 app.use(express.json())
 app.use(cors())
 app.listen(port, () => {
-  console.log(`@${moment(Date.now()).format('HH:mm:ss.ms')}: server listening on port ${port}`)
+  console.log(`[${moment(Date.now()).format('HH:mm:ss.S')}] server started and listening on port ${port}`)
 })
 
 app.post('/api/davinci', async (req, res) => {
-  const prompt = req.body.prompt;
+  const prompt = req?.body?.prompt
   try {
     const answer = await davinciConnector.promptDavinci(prompt)
     await mongoConnector.addOne(prompt, answer)
@@ -28,7 +28,7 @@ app.post('/api/davinci', async (req, res) => {
 })
 
 app.post('/api/auth', (req, res) => {
-  const { user, pass } = req.body
+  const { user, pass } = req?.body
   if (user === process.env.USER && pass === process.env.PASS) {
     res.json({ token: jwt.sign('admin', process.env.SECRET) })
   }
@@ -38,7 +38,7 @@ app.post('/api/auth', (req, res) => {
 })
 
 app.post('/api/create', async (req, res) => {
-  const { prompt, answer } = req.body;
+  const { prompt, answer } = req?.body
   try {
     await mongoConnector.addOne(prompt, answer)
     const docs = await mongoConnector.fetchAll()
@@ -75,7 +75,7 @@ app.patch('/api/update', async (req, res) => {
 })
 
 app.delete('/api/delete', async (req, res) => {
-  const { id } = req?.body;
+  const { id } = req?.body
   try {
     await mongoConnector.deleteOne(id)
     const docs = await mongoConnector.fetchAll()

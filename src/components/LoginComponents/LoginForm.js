@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Form, Button, Alert, Fade } from 'react-bootstrap'
+import { Row, Col, Form, Button, Alert } from 'react-bootstrap'
 import { useSignIn } from 'react-auth-kit'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,8 +9,9 @@ const LoginForm = ({ setIsLoggedIn }) => {
   const [user, setUser] = useState('')
   const [pass, setPass] = useState('')
   const [loginAlert, setLoginAlert] = useState(false)
-  const signIn = useSignIn()
-  const navigate = useNavigate()
+
+  const signIn = useSignIn()      // react-auth-kit
+  const navigate = useNavigate()  // react-auth-kit
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault()
