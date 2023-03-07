@@ -1,7 +1,5 @@
 # Created by https://www.toptal.com/developers/gitignore/api/react
 # Edit at https://www.toptal.com/developers/gitignore?templates=react
-# .env
-README.md
 
 ### react ###
 .DS_*
@@ -44,3 +42,6 @@ sketch
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+/server/config/dotenv

@@ -19,7 +19,7 @@ const promptDavinci = async (prompt) => {
     let res = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt: prompt,
-      max_tokens: 20,
+      max_tokens: 50,
       temperature: 0.9
     })
     answer = res?.data?.choices[0]?.text.replace(/\s+/g, ' ').trim() // trim unnecessary crap like \n and \t

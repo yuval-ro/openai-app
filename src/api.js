@@ -2,11 +2,11 @@ import axios from 'axios'
 import moment from 'moment'
 
 const onSuccess = (action) => {
-  console.log(`@${moment(Date.now()).format('HH:mm:ss.ms')}: ${action} SUCCESSED`)
+  console.log(`[${moment(Date.now()).format('HH:mm:ss.S')}] ${action} SUCCESSED`)
 }
 
 const onFail = (action, err) => {
-  console.log(`@${moment(Date.now()).format('HH:mm:ss.ms')}: ${action} FAILED`)
+  console.log(`[${moment(Date.now()).format('HH:mm:ss.S')}] ${action} FAILED`)
   console.error(err)
 }
 
