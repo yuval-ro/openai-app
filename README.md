@@ -27,7 +27,7 @@ Every such correspondence is saved as a log document in the backend's noSQL data
 # Prerequisites
 
 - An OpenAI account.
-- [Node.js]()
+- [Node.js](https://nodejs.org/en/download)
 - [MongoDB Community Server](https://www.mongodb.com/try/download/community)
 - [MongoDB Compass](https://www.mongodb.com/try/download/compass)
 
