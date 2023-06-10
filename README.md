@@ -7,6 +7,7 @@
 
 # Table of Contents
 - [OpenAI App](#openai-app)
+          - [Powered by](#powered-by)
 - [Table of Contents](#table-of-contents)
 - [About](#about)
 - [Prerequisites](#prerequisites)
@@ -80,9 +81,13 @@ In a web browser, navigate to http://localhost:3000/ and test the app.
 
 # Licensing
 
-This repository is licensed under [GPLv3](./LICENSE)
+[![shields.io/badge](https://shields.io/badge/License-GPLv3-red?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.html)
+
+This repository is licensed under the copyleft [GPLv3](./LICENSE).
 
 
 # Contribution
+
+![contributions](https://shields.io/badge/Contributes-Yes-lightgreen?style=flat-square)
 
 Currently, we accept any code contributions.
