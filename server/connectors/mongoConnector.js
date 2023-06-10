@@ -2,6 +2,8 @@ const moment = require('moment')
 const { mongoose, Schema } = require('mongoose')
 
 const { connString, dbName, collName, logSchemaBody } = require('./consts')
+
+
 const logSchema = new Schema(logSchemaBody, { collection: collName }) // defined schema for saving documents in the DB
 const LogModel = mongoose.model('LogModel', logSchema) // document, constructed according to the specified schema
 const options = {
@@ -11,16 +13,21 @@ const options = {
   socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
   family: 4 // Use IPv4, skip trying IPv6
 }
+
+
 mongoose.set('strictQuery', true) // ensures that only the fields that are specified in the Schema will be saved even if some other fields were sent
 let isConnected = false
+
 
 const exists = async (id) => {
   return (await LogModel.findOne({ _id: id }) != null)
 }
 
+
 const onSuccess = (action) => {
   console.log(`[${moment(Date.now()).format('HH:mm:ss.S')}] ${action} SUCCEEDED`)
 }
+
 
 const onFail = (action, reason, err = null) => {
   console.log(`[${moment(Date.now()).format('HH:mm:ss.S')}] ${action} FAILED: ${reason}`)
@@ -28,6 +35,7 @@ const onFail = (action, reason, err = null) => {
     console.error(err)
   }
 }
+
 
 const connect = async () => {
   const action = `connecting to database "${dbName}"`
@@ -43,6 +51,7 @@ const connect = async () => {
     throw err
   }
 }
+
 
 const addOne = async (prompt, answer) => {
   const action = `saving document {"${prompt}", "${answer}"}`
@@ -61,6 +70,7 @@ const addOne = async (prompt, answer) => {
   }
 }
 
+
 const fetchAll = async () => {
   const action = 'fetching all documents'
   try {
@@ -74,6 +84,7 @@ const fetchAll = async () => {
     throw err
   }
 }
+
 
 const deleteOne = async (id) => {
   const action = `deleting doc #${id}`
@@ -93,6 +104,7 @@ const deleteOne = async (id) => {
   }
 }
 
+
 const deleteAll = async () => {
   const action = 'deleting all docs'
   try {
@@ -105,6 +117,7 @@ const deleteAll = async () => {
     throw err
   }
 }
+
 
 const updateOne = async (id, prompt, answer) => {
   const action = `patching documnet ${id}`
@@ -126,4 +139,11 @@ const updateOne = async (id, prompt, answer) => {
   }
 }
 
-module.exports = { addOne, fetchAll, deleteOne, deleteAll, updateOne }
+
+module.exports = {
+  addOne,
+  fetchAll,
+  deleteOne,
+  deleteAll,
+  updateOne
+}

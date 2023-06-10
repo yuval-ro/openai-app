@@ -2,8 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const moment = require('moment')
 const jwt = require('jsonwebtoken')
-const dotenv = require('dotenv').config({ path: './dotenv/.env' })
 
+const secret = require('./secret.js')
 const { davinciConnector, mongoConnector } = require('./connectors')
 
 const app = express()
@@ -18,6 +18,7 @@ app.post('/api/davinci', async (req, res) => {
   const prompt = req?.body?.prompt
   try {
     const answer = await davinciConnector.promptDavinci(prompt)
+    console.log(answer)
     await mongoConnector.addOne(prompt, answer)
     res.json({ answer: answer })
   }
@@ -29,8 +30,8 @@ app.post('/api/davinci', async (req, res) => {
 
 app.post('/api/auth', (req, res) => {
   const { user, pass } = req?.body
-  if (user === process.env.USER && pass === process.env.PASS) {
-    res.json({ token: jwt.sign('admin', process.env.SECRET) })
+  if (user === secret.user && pass === secret.pass) {
+    res.json({ token: jwt.sign('admin', secret.secret) })
   }
   else {
     res.status(401).end()
