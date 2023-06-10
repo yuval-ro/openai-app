@@ -1,8 +1,7 @@
 # OpenAI App
 ###### Powered by
 
-![react,js,bootstrap](https://skillicons.dev/icons?i=react,js,bootstrap)
-![nodejs,express,mongodb](https://skillicons.dev/icons?i=nodejs,express,mongodb)
+![react,js,bootstrap,nodejs,express,mongodb](https://skillicons.dev/icons?i=react,js,bootstrap,nodejs,express,mongodb)
 
 
 # Table of Contents
