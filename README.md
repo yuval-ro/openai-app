@@ -6,7 +6,6 @@
 
 # Table of Contents
 - [OpenAI App](#openai-app)
-          - [Powered by](#powered-by)
 - [Table of Contents](#table-of-contents)
 - [About](#about)
 - [Prerequisites](#prerequisites)
