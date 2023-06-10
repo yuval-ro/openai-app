@@ -31,8 +31,9 @@ Every such correspondence is saved as a log document in the backend's noSQL data
 - [MongoDB Community Server](https://www.mongodb.com/try/download/community)
 - [MongoDB Compass](https://www.mongodb.com/try/download/compass)
 
-*Note: Download MongoDB Community Server first, then in the installation de-check the Compass installation option since it is bugged (as of time of writing).  
-Then, download and install Compass separately.
+> Download MongoDB Community Server first.  
+In the setup wizard, de-check the Compass installation option.  
+When finished, download and install Compass separately.
 
 
 # Setup
