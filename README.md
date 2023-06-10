@@ -1,5 +1,5 @@
 # OpenAI App
-<font size=1>Powered by:</font>
+Powered by:
 
 ![react,js,bootstrap](https://skillicons.dev/icons?i=react,js,bootstrap)
 ![nodejs,express,mongodb](https://skillicons.dev/icons?i=nodejs,express,mongodb)
