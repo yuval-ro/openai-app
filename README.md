@@ -1,11 +1,7 @@
 # OpenAI App
 ###### Powered by
-
 ![react,js,bootstrap,nodejs,express,mongodb](https://skillicons.dev/icons?i=react,js,bootstrap,nodejs,express,mongodb)
 
-###### Licensed under
-
-[![gplv3](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 # Table of Contents
 - [OpenAI App](#openai-app)
@@ -15,6 +11,7 @@
 - [Setup](#setup)
 - [Demo](#demo)
 - [Contributions](#contributions)
+- [License](#license)
 
 
 # About
@@ -89,3 +86,7 @@ Refer to table below before opening any new issues / PRs:
 | Pull requests | ✔️ |
 | Security issues | ✔️ |
 | Other issues | ❌ |
+
+# License
+
+Licensed under the [GPLv3](./LICENSE), Copyright (c) 2023 yuval-ro. All rights reserved.
