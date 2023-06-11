@@ -3,6 +3,9 @@
 
 ![react,js,bootstrap,nodejs,express,mongodb](https://skillicons.dev/icons?i=react,js,bootstrap,nodejs,express,mongodb)
 
+###### Licensed under
+
+[![gplv3](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 # Table of Contents
 - [OpenAI App](#openai-app)
@@ -11,8 +14,7 @@
 - [Prerequisites](#prerequisites)
 - [Setup](#setup)
 - [Demo](#demo)
-- [Licensing](#licensing)
-- [Contribution](#contribution)
+- [Contributions](#contributions)
 
 
 # About
@@ -78,15 +80,12 @@ In a web browser, navigate to http://localhost:3000/ and test the app.
 <img src="./.github/assets/app-demo.png" height="500px"/>
 
 
-# Licensing
+# Contributions
 
-[![shields.io/badge](https://shields.io/badge/License-GPLv3-red?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.html)
+Refer to table below before opening any new issues / PRs:
 
-This repository is licensed under the copyleft [GPLv3](./LICENSE).
-
-
-# Contribution
-
-![contributions](https://shields.io/badge/Contributes-Yes-lightgreen?style=flat-square)
-
-Currently, we accept any code contributions.
+| Type of Cont. | Accepted |
+| ---- | ---------------- |
+| Pull requests | ✔️ |
+| Security issues | ✔️ |
+| Other issues | ❌ |
